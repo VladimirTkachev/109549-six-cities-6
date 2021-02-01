@@ -1,7 +1,7 @@
 # Личный проект «Шесть городов» [![Build status][travis-image]][travis-url]
 
 * Студент: [Владимир Ткачев](https://up.htmlacademy.ru/react/6/user/109549).
-* Наставник: `Неизвестно`.
+* Наставник: [Константин Мамаев](https://htmlacademy.ru/profile/meison).
 
 ---
 
