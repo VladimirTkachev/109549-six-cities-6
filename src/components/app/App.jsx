@@ -34,7 +34,7 @@ App.propTypes = {
         /** Наименование карточки */
         name: PropTypes.string.isRequired,
         /** Тип */
-        type: PropTypes.oneOf[`Apartment` `Private Room`],
+        type: PropTypes.string.isRequired,
       }).isRequired,
   ),
 };
