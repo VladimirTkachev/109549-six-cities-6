@@ -40,7 +40,7 @@ const OfferCard = ({item = {}}) => {
             <svg className="place-card__bookmark-icon"
               width="18"
               height="19">
-              <svg dangerouslySetInnerHTML={{__html: `<use xlink:href="#icon-bookmark"/>`}}/>
+              <use xlinkHref="#icon-bookmark"/>
             </svg>
             <span className="visually-hidden">
               To bookmarks

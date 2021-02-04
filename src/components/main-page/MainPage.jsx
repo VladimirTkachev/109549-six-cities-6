@@ -4,11 +4,9 @@ import PropTypes from "prop-types";
 import OfferCard from "../offer-card/OfferCard";
 
 const MainPage = ({offersCards}) => {
-  const hasCards = !!offersCards && !!offersCards.length;
-
   return (
     <>
-      {hasCards && offersCards.map((card) => {
+      {offersCards.map((card) => {
         return (
           <OfferCard key={card.id} item={card}/>
         );
