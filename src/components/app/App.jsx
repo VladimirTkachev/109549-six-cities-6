@@ -1,12 +1,35 @@
 import React from "react";
 import PropTypes from "prop-types";
+import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 
 import MainPage from "../main-page/MainPage";
+import SignInPage from "../sign-in-page/SignInPage";
+import FavoritesPage from "../favorites-page/FavoritePage";
+import OfferPage from "../offer-page/OfferPage";
+import NotFoundPage from "../not-found-page/NotFoundPage";
 
 const App = ({offersCards}) => {
   return (
     <>
-      <MainPage offersCards={offersCards}/>
+      <Router>
+        <Switch>
+          <Route path="/" exact>
+            <MainPage offersCards={offersCards}/>
+          </Route>
+          <Route path="/login" exact>
+            <SignInPage/>
+          </Route>
+          <Route path="/favorites" exact>
+            <FavoritesPage/>
+          </Route>
+          <Route path="/offer/:id" exact>
+            <OfferPage/>
+          </Route>
+          <Route>
+            <NotFoundPage/>
+          </Route>
+        </Switch>
+      </Router>
     </>
   );
 };
