@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 
+import {ReviewersType, OfferCardTypes} from "../../prop-types/offer-card";
 import MainPage from "../main-page/MainPage";
 import SignInPage from "../sign-in-page/SignInPage";
 import FavoritesPage from "../favorites-page/FavoritePage";
@@ -9,7 +10,7 @@ import OfferPage from "../offer-page/OfferPage";
 import NotFoundPage from "../not-found-page/NotFoundPage";
 
 const App = (props) => {
-  const {username, mainTitle, sort, citiesList, offersCards, favoritesList} = props;
+  const {username, mainTitle, sort, citiesList, offersCards, favoritesList, reviewers} = props;
 
   return (
     <>
@@ -32,7 +33,10 @@ const App = (props) => {
               items={favoritesList}/>
           </Route>
           <Route path="/offer/:id" exact>
-            <OfferPage/>
+            <OfferPage username={username}
+              items={offersCards}
+              reviewers={reviewers}
+              neighboursList={offersCards.slice(0, 3)}/>
           </Route>
           <Route>
             <NotFoundPage/>
@@ -42,29 +46,6 @@ const App = (props) => {
     </>
   );
 };
-
-const OfferCardType = PropTypes.shape({
-  /** Идентификатор карточки */
-  id: PropTypes.string.isRequired,
-  /** Подпись с дополнительной информацие */
-  mark: PropTypes.string,
-  /** Ссылка длля перехода в карточку */
-  href: PropTypes.string.isRequired,
-  /** Ссылка на изображение карточки */
-  img: PropTypes.string.isRequired,
-  /** Цена */
-  price: PropTypes.string.isRequired,
-  /** Дополнительная подпись для цены */
-  attribute: PropTypes.string.isRequired,
-  /** Присутствует ли карточка в закладках */
-  hasBookmark: PropTypes.bool,
-  /** ОЦенка */
-  rating: PropTypes.number.isRequired,
-  /** Наименование карточки */
-  name: PropTypes.string.isRequired,
-  /** Тип */
-  type: PropTypes.string.isRequired,
-});
 
 App.propTypes = {
   /** Имя пользователя */
@@ -80,7 +61,7 @@ App.propTypes = {
   ),
   /** Подпись страницы выбора предложений */
   mainTitle: PropTypes.string.isRequired,
-  /** Список сортировка */
+  /** Список сортировки */
   sort: PropTypes.arrayOf(
       PropTypes.shape({
         /** Подпись */
@@ -90,7 +71,7 @@ App.propTypes = {
       }).isRequired,
   ),
   /** Список карточек предложений */
-  offersCards: PropTypes.arrayOf(OfferCardType),
+  offersCards: PropTypes.arrayOf(OfferCardTypes).isRequired,
   /** Список выбранных городов */
   favoritesList: PropTypes.arrayOf(
       PropTypes.shape({
@@ -99,9 +80,11 @@ App.propTypes = {
         /** Идентификатор */
         id: PropTypes.string.isRequired,
         /** Список предложений */
-        items: PropTypes.arrayOf(OfferCardType).isRequired,
+        items: PropTypes.arrayOf(OfferCardTypes).isRequired,
       }),
   ),
+  /** Список комментариев пользователей */
+  reviewers: PropTypes.arrayOf(ReviewersType).isRequired,
 };
 
 export default App;

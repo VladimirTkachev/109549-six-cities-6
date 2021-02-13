@@ -2,7 +2,7 @@ import React from "react";
 import ReactDom from "react-dom";
 
 import App from "./components/app/App";
-import {Username, MainTitle, Sort, CitiesList, OfferCards, FavoritesList} from "./mock-data";
+import {Username, OfferCards, MainTitle, Sort, CitiesList, FavoritesList, Reviewers} from "./mocks/offer";
 
 ReactDom.render(
     <App username={Username}
@@ -10,6 +10,7 @@ ReactDom.render(
       sort={Sort}
       offersCards={OfferCards}
       citiesList={CitiesList}
+      reviewers={Reviewers}
       favoritesList={FavoritesList}/>,
     document.getElementById(`root`),
 );

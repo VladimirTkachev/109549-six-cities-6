@@ -2,6 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
 
+import {OfferCardTypes} from "../../prop-types/offer-card";
+import FavoriteCard from "./favorite-card/favorites-page-favorite-card";
+
 const FavoritesPage = (props) => {
   const {username, items} = props;
 
@@ -67,7 +70,7 @@ const FavoritesPage = (props) => {
               <ul className="favorites__list">
                 {items.map((it) => {
                   return (
-                    <li key={it.id}
+                    <li key={`${it.id}`}
                       className="favorites__locations-items">
                       <div className="favorites__locations locations locations--current">
                         <div className="locations__item">
@@ -82,57 +85,7 @@ const FavoritesPage = (props) => {
                       <div className="favorites__places">
                         {it.items.map((item) => {
                           return (
-                            <article key={item.id}
-                              className="favorites__card place-card">
-                              <div className="favorites__image-wrapper place-card__image-wrapper">
-                                <Link to="#">
-                                  <img className="place-card__image"
-                                    src={item.img}
-                                    width="150"
-                                    height="110"
-                                    alt="Place image"/>
-                                </Link>
-                              </div>
-                              <div className="favorites__card-info place-card__info">
-                                <div className="place-card__price-wrapper">
-                                  <div className="place-card__price">
-                                    <b className="place-card__price-value">
-                                      {item.price}
-                                    </b>
-                                    <span className="place-card__price-text">
-                                      {item.attribute}
-                                    </span>
-                                  </div>
-                                  <button className="place-card__bookmark-button place-card__bookmark-button--active button"
-                                    type="button">
-                                    <svg className="place-card__bookmark-icon"
-                                      width="18"
-                                      height="19">
-                                      <use xlinkHref="#icon-bookmark"/>
-                                    </svg>
-                                    <span className="visually-hidden">
-                                      In bookmarks
-                                    </span>
-                                  </button>
-                                </div>
-                                <div className="place-card__rating rating">
-                                  <div className="place-card__stars rating__stars">
-                                    <span style={{width: `100%`}}/>
-                                    <span className="visually-hidden">
-                                      Rating
-                                    </span>
-                                  </div>
-                                </div>
-                                <h2 className="place-card__name">
-                                  <Link to="#">
-                                    {item.name}
-                                  </Link>
-                                </h2>
-                                <p className="place-card__type">
-                                  {item.type}
-                                </p>
-                              </div>
-                            </article>
+                            <FavoriteCard key={`${item.id}`} item={item}/>
                           );
                         })}
                       </div>
@@ -156,29 +109,6 @@ const FavoritesPage = (props) => {
   );
 };
 
-const OfferCardType = PropTypes.shape({
-  /** Идентификатор карточки */
-  id: PropTypes.string.isRequired,
-  /** Подпись с дополнительной информацие */
-  mark: PropTypes.string,
-  /** Ссылка длля перехода в карточку */
-  href: PropTypes.string.isRequired,
-  /** Ссылка на изображение карточки */
-  img: PropTypes.string.isRequired,
-  /** Цена */
-  price: PropTypes.string.isRequired,
-  /** Дополнительная подпись для цены */
-  attribute: PropTypes.string.isRequired,
-  /** Присутствует ли карточка в закладках */
-  hasBookmark: PropTypes.bool,
-  /** ОЦенка */
-  rating: PropTypes.number.isRequired,
-  /** Наименование карточки */
-  name: PropTypes.string.isRequired,
-  /** Тип */
-  type: PropTypes.string.isRequired,
-});
-
 FavoritesPage.propTypes = {
   /** Ися пользователя */
   username: PropTypes.string.isRequired,
@@ -190,7 +120,7 @@ FavoritesPage.propTypes = {
         /** Идентификатор */
         id: PropTypes.string.isRequired,
         /** Список предложений */
-        items: PropTypes.arrayOf(OfferCardType).isRequired,
+        items: PropTypes.arrayOf(OfferCardTypes).isRequired,
       }),
   ),
 };
