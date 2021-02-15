@@ -1,25 +1,31 @@
 import React from "react";
 import PropTypes from "prop-types";
+import {Link} from "react-router-dom";
+
+import {OfferCardTypes} from "../../prop-types/offer-card";
 
 const STAR_WIDTH = 20;
 
-const OfferCard = ({item = {}}) => {
-  const {mark, href, img, price, attribute, hasBookmark, rating, name, type} = item;
-  const activeBookmarkClass = hasBookmark ? `place-card__bookmark-button--active` : ``;
+const OfferCard = (props) => {
+  const {item, onMouseEnter, onMouseLeave} = props;
+  const {id, isPremium, previewImage, price, isFavorite, rating, title, type} = item;
+  const activeBookmarkClass = isFavorite ? `place-card__bookmark-button--active` : ``;
 
   return (
-    <article className="cities__place-card place-card">
-      {mark && (
+    <article className="cities__place-card place-card"
+      onMouseEnter={(evt) => onMouseEnter(item, evt)}
+      onMouseLeave={(evt) => onMouseLeave(evt)}>
+      {isPremium && (
         <div className="place-card__mark">
           <span>
-            {mark}
+            Premium
           </span>
         </div>
       )}
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href={href}>
+        <a href="#">
           <img className="place-card__image"
-            src={img}
+            src={previewImage}
             width="260"
             height="200"
             alt="Place image"/>
@@ -29,10 +35,10 @@ const OfferCard = ({item = {}}) => {
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">
-              {price}
+              {`€${price}`}
             </b>
             <span className="place-card__price-text">
-              {`/ ${attribute}`}
+              / night
             </span>
           </div>
           <button className={`place-card__bookmark-button ${activeBookmarkClass} button`}
@@ -58,9 +64,9 @@ const OfferCard = ({item = {}}) => {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href={href}>
-            {name}
-          </a>
+          <Link to={`offer/${id}`}>
+            {title}
+          </Link>
         </h2>
         <p className="place-card__type">
           {type}
@@ -70,30 +76,19 @@ const OfferCard = ({item = {}}) => {
   );
 };
 
+OfferCard.defaultProps = {
+  item: {},
+  onMouseEnter: () => undefined,
+  onMouseLeave: () => undefined,
+};
+
 OfferCard.propTypes = {
   /** Данные карточки */
-  item: PropTypes.shape({
-    /** Идентификатор карточки */
-    id: PropTypes.string.isRequired,
-    /** Подпись с дополнительной информацие */
-    mark: PropTypes.string,
-    /** Ссылка длля перехода в карточку */
-    href: PropTypes.string.isRequired,
-    /** Ссылка на изображение карточки */
-    img: PropTypes.string.isRequired,
-    /** Цена */
-    price: PropTypes.string.isRequired,
-    /** Дополнительная подпись для цены */
-    attribute: PropTypes.string.isRequired,
-    /** Присутствует ли карточка в закладках */
-    hasBookmark: PropTypes.bool,
-    /** ОЦенка */
-    rating: PropTypes.number.isRequired,
-    /** Наименование карточки */
-    name: PropTypes.string.isRequired,
-    /** Тип */
-    type: PropTypes.string.isRequired,
-  }).isRequired,
+  item: OfferCardTypes.isRequired,
+  /** Обработчик мыши при наведении наэлемент */
+  onMouseEnter: PropTypes.func.isRequired,
+  /** Обработчик мыши при уходе с элемента */
+  onMouseLeave: PropTypes.func.isRequired,
 };
 
 export default OfferCard;

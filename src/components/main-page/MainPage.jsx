@@ -2,7 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
 
-import OfferCard from "../offer-card/OfferCard";
+import {OfferCardTypes} from "../../prop-types/offer-card";
+import OffersList from "../offers-list/OffersList";
 
 const MainPage = (props) => {
   const {username, title, sort, selectedSort, selectedCity, citiesList, offersCards} = props;
@@ -45,7 +46,7 @@ const MainPage = (props) => {
                 <ul className="header__nav-list">
                   <li className="header__nav-item user">
                     <Link className="header__nav-link header__nav-link--profile"
-                      to="#">
+                      to="">
                       <div className="header__avatar-wrapper user__avatar-wrapper"/>
                       <span className="header__user-name user__name">
                         {username}
@@ -120,13 +121,7 @@ const MainPage = (props) => {
                     })}
                   </ul>
                 </form>
-                <div className="cities__places-list places__list tabs__content">
-                  {offersCards.map((card) => {
-                    return (
-                      <OfferCard key={card.id} item={card}/>
-                    );
-                  })}
-                </div>
+                <OffersList items={offersCards}/>
               </section>
               <div className="cities__right-section">
                 <section className="cities__map map"/>
@@ -167,30 +162,7 @@ MainPage.propTypes = {
   /** Данные выбранной сортировки */
   selectedSort: LabelValueType.isRequired,
   /** Список карточек предложений */
-  offersCards: PropTypes.arrayOf(
-      PropTypes.shape({
-        /** Идентификатор карточки */
-        id: PropTypes.string.isRequired,
-        /** Подпись с дополнительной информацие */
-        mark: PropTypes.string,
-        /** Ссылка длля перехода в карточку */
-        href: PropTypes.string.isRequired,
-        /** Ссылка на изображение карточки */
-        img: PropTypes.string.isRequired,
-        /** Цена */
-        price: PropTypes.string.isRequired,
-        /** Дополнительная подпись для цены */
-        attribute: PropTypes.string.isRequired,
-        /** Присутствует ли карточка в закладках */
-        hasBookmark: PropTypes.bool,
-        /** ОЦенка */
-        rating: PropTypes.number.isRequired,
-        /** Наименование карточки */
-        name: PropTypes.string.isRequired,
-        /** Тип */
-        type: PropTypes.string.isRequired,
-      }).isRequired,
-  ),
+  offersCards: PropTypes.arrayOf(OfferCardTypes).isRequired,
 };
 
 export default MainPage;
