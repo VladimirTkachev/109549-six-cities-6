@@ -2,7 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
 
-import {OfferCardTypes} from "../../prop-types/offer-card";
+import {OfferCardTypes} from "Project/prop-types/offer-card";
+
 import FavoriteCard from "./favorite-card/favorites-page-favorite-card";
 
 const FavoritesPage = (props) => {

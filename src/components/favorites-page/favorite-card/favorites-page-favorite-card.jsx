@@ -1,7 +1,7 @@
 import React from "react";
 import {Link} from "react-router-dom";
 
-import {OfferCardTypes} from "../../../prop-types/offer-card";
+import {OfferCardTypes} from "Project/prop-types/offer-card";
 
 const FavoriteCard = ({item}) => {
   return (

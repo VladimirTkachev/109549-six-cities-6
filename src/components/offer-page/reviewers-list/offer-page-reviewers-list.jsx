@@ -1,7 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import {ReviewersType} from "../../../prop-types/offer-card";
+import {ReviewersType} from "Project/prop-types/offer-card";
+
 import {STAR_WIDTH} from "../OfferPage";
 
 const ReviewersList = ({items}) => {

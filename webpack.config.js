@@ -32,7 +32,11 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: ['.js', '.jsx']
+    extensions: ['.js', '.jsx'],
+    alias: {
+      Public: path.resolve(__dirname, './public'),
+      Project: path.resolve(__dirname, './src'),
+    },
   },
   devtool: 'source-map',
 };

@@ -1,12 +1,21 @@
-import React from "react";
+import React, {useCallback, useState} from "react";
 import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
 
-import {OfferCardTypes} from "../../prop-types/offer-card";
-import OffersList from "../offers-list/OffersList";
+import MapComponent from "Project/components/map-component/MapComponent";
+import {OfferCardTypes} from "Project/prop-types/offer-card";
+import OffersList from "Project/components/offers-list/OffersList";
 
 const MainPage = (props) => {
   const {username, title, sort, selectedSort, selectedCity, citiesList, offersCards} = props;
+  const [activeItem, setActiveItem] = useState(null);
+  const handleMouseEnter = useCallback((item) => {
+    setActiveItem(item);
+  }, []);
+  const handleMouseLeave = useCallback(() => {
+    setActiveItem(null);
+  }, []);
+
   return (
     <>
       <div style={{display: `none`}}>
@@ -121,10 +130,16 @@ const MainPage = (props) => {
                     })}
                   </ul>
                 </form>
-                <OffersList items={offersCards}/>
+                <OffersList
+                  items={offersCards}
+                  onMouseEnter={handleMouseEnter}
+                  onMouseLeave={handleMouseLeave}/>
               </section>
               <div className="cities__right-section">
-                <section className="cities__map map"/>
+                <section className="cities__map map">
+                  <MapComponent items={offersCards}
+                    activeItem={activeItem}/>
+                </section>
               </div>
             </div>
           </div>
