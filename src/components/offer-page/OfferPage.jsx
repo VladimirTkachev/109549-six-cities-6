@@ -2,7 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import {useParams} from "react-router-dom";
 
-import {OfferCardTypes, ReviewersType} from "../../prop-types/offer-card";
+import {OfferCardTypes, ReviewersType} from "Project/prop-types/offer-card";
+import MapComponent from "Project/components/map-component/MapComponent";
+
 import ImagesList from "./images-list/offer-page-images-list";
 import PropertyList from "./property-list/offer-card-property-list";
 import ReviewersList from "./reviewers-list/offer-page-reviewers-list";
@@ -173,19 +175,25 @@ const OfferPage = (props) => {
                 </section>
               </div>
             </div>
-            <section className="property__map map"/>
+            <section className="property__map map">
+              {hasNeighboursList && (
+                <MapComponent items={neighboursList}/>
+              )}
+            </section>
           </section>
-          {hasNeighboursList && (
-            <div className="container">
-              <section className="near-places places">
-                <h2 className="near-places__title">
-                  Other places in the neighbourhood
-                </h2>
-                <NeighboursList items={neighboursList}/>
-                <CommentForm/>
-              </section>
-            </div>
-          )}
+          <div className="container">
+            <section className="near-places places">
+              {hasNeighboursList && (
+                <>
+                  <h2 className="near-places__title">
+                    Other places in the neighbourhood
+                  </h2>
+                  <NeighboursList items={neighboursList}/>
+                </>
+              )}
+              <CommentForm/>
+            </section>
+          </div>
         </main>
       </div>
     </>

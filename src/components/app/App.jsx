@@ -2,12 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 
-import {ReviewersType, OfferCardTypes} from "../../prop-types/offer-card";
-import MainPage from "../main-page/MainPage";
-import SignInPage from "../sign-in-page/SignInPage";
-import FavoritesPage from "../favorites-page/FavoritePage";
-import OfferPage from "../offer-page/OfferPage";
-import NotFoundPage from "../not-found-page/NotFoundPage";
+import {ReviewersType, OfferCardTypes} from "Project/prop-types/offer-card";
+import MainPage from "Project/components/main-page/MainPage";
+import SignInPage from "Project/components/sign-in-page/SignInPage";
+import FavoritesPage from "Project/components/favorites-page/FavoritePage";
+import OfferPage from "Project/components/offer-page/OfferPage";
+import NotFoundPage from "Project/components/not-found-page/NotFoundPage";
 
 const App = (props) => {
   const {username, mainTitle, sort, citiesList, offersCards, favoritesList, reviewers} = props;

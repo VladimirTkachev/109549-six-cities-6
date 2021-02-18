@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import OfferCard from "../../offer-card/OfferCard";
-import {OfferCardTypes} from "../../../prop-types/offer-card";
+import OfferCard from "Project/components/offer-card/OfferCard";
+import {OfferCardTypes} from "Project/prop-types/offer-card";
 
 const NeighboursList = ({items}) => {
   return (
