@@ -1,5 +1,6 @@
 import React, {useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
+// Библиотека для работы с картами
 import leaflet from "leaflet";
 import "leaflet/dist/leaflet.css";
 
