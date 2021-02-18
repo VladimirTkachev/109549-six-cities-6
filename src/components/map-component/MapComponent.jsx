@@ -13,7 +13,7 @@ const MapComponent = (props) => {
   useEffect(() => {
     const city = firstItem.city;
 
-    mapRef.current = leaflet.map(`map`, {
+    mapRef.current = leaflet.map(mapRef.current, {
       center: {
         lat: city.location.latitude,
         lng: city.location.longitude
