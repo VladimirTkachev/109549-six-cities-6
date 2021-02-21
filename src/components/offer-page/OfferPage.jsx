@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import {useParams} from "react-router-dom";
 
-import {OfferCardTypes, ReviewersType} from "Project/prop-types/offer-card";
+import {ReviewersType} from "Project/prop-types/offer-card";
 import {MapComponentWrapped} from "Project/components/map-component/MapComponent";
 
 import ImagesList from "./images-list/offer-page-images-list";
