@@ -3,13 +3,14 @@ import PropTypes from "prop-types";
 import {useParams} from "react-router-dom";
 
 import {OfferCardTypes, ReviewersType} from "Project/prop-types/offer-card";
-import MapComponent from "Project/components/map-component/MapComponent";
+import {MapComponentWrapped} from "Project/components/map-component/MapComponent";
 
 import ImagesList from "./images-list/offer-page-images-list";
 import PropertyList from "./property-list/offer-card-property-list";
 import ReviewersList from "./reviewers-list/offer-page-reviewers-list";
 import NeighboursList from "./neighbours-list/offers-page-neighbours-list";
 import CommentForm from "./comments-form/offer-page-comments-form";
+import withOfferPage from "./hocs/with-offer-page.js";
 
 export const STAR_WIDTH = 20;
 
@@ -21,15 +22,15 @@ const OfferTypes = {
 };
 
 const OfferPage = (props) => {
-  const {items, username, reviewers, neighboursList} = props;
+  const {items, username, reviewers, neightbours} = props;
   const id = Number(useParams().id);
-  const item = items.find((it) => it.id === id);
+  const item = items[id];
   const {images, isPremium, isFavorite, title, description, rating, type, bedrooms, maxAdults, price, goods, host} = item || {};
   const bookMarkActiveClass = isFavorite
     ? `property__bookmark-button--active` : ``;
   const hostProClass = host.isPro ? `property__avatar-wrapper--pro` : ``;
   const offerReviewer = reviewers.filter((reviewer) => reviewer.id === item.id);
-  const hasNeighboursList = neighboursList && !!neighboursList.length;
+  const hasNeighboursList = neightbours[id] && !!neightbours[id].length;
 
   return (
     <>
@@ -177,7 +178,7 @@ const OfferPage = (props) => {
             </div>
             <section className="property__map map">
               {hasNeighboursList && (
-                <MapComponent items={neighboursList}/>
+                <MapComponentWrapped itemsIds={neightbours[id]}/>
               )}
             </section>
           </section>
@@ -188,7 +189,8 @@ const OfferPage = (props) => {
                   <h2 className="near-places__title">
                     Other places in the neighbourhood
                   </h2>
-                  <NeighboursList items={neighboursList}/>
+                  <NeighboursList items={items}
+                    itemsIds={neightbours[id]}/>
                 </>
               )}
               <CommentForm/>
@@ -203,12 +205,13 @@ const OfferPage = (props) => {
 OfferPage.propTypes = {
   /** Имя пользователя */
   username: PropTypes.string.isRequired,
-  /** Список карточек предложений */
-  items: PropTypes.arrayOf(OfferCardTypes).isRequired,
+  /** Map - объект идентифыикаторо карточки на данные карточки предложения */
+  items: PropTypes.object,
   /** Список комментариев пользователей */
   reviewers: PropTypes.arrayOf(ReviewersType).isRequired,
-  /** Список соседних предложений */
-  neighboursList: PropTypes.arrayOf(OfferCardTypes),
+  /** Map - объект идентифыикаторо карточки на данные карточки предложения */
+  neightbours: PropTypes.object,
 };
 
+export const OfferPageWrapped = withOfferPage(OfferPage);
 export default OfferPage;

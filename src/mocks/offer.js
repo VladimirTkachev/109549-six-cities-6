@@ -1,6 +1,6 @@
-export const Username = `john_doe@gmail.com`;
+const Username = `john_doe@gmail.com`;
 
-export const MainTitle = `312 places to stay in Amsterdam`;
+const MainTitle = `312 places to stay in Amsterdam`;
 
 const Sort = [
   {
@@ -402,6 +402,8 @@ const Reviewers = [
 ];
 
 export {
+  Username,
+  MainTitle,
   Sort,
   OfferCards,
   FavoritesList,

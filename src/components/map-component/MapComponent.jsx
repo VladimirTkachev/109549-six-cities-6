@@ -1,19 +1,20 @@
 import React, {useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-// Библиотека для работы с картами
 import leaflet from "leaflet";
 import "leaflet/dist/leaflet.css";
 
 import {OfferCardTypes} from "Project/prop-types/offer-card";
 
+import withMapComponent from "./hocs/with-map-component.js";
+
 const MapComponent = (props) => {
-  const {items, activeItem} = props;
+  const {items, itemsIds, activeItem} = props;
   const mapRef = useRef(null);
   const [mapSettings, setMapSettings] = useState(null);
-  const [firstItem = {}] = items;
+  const [firstId] = itemsIds;
 
   useEffect(() => {
-    const city = firstItem.city;
+    const city = items[firstId].city;
 
     const settings = leaflet.map(mapRef.current, {
       center: {
@@ -34,13 +35,13 @@ const MapComponent = (props) => {
     return () => {
       mapRef.current.remove();
     };
-  }, [mapRef, firstItem, setMapSettings]);
+  }, [mapRef, firstId, items, setMapSettings]);
 
   useEffect(() => {
     if (mapSettings) {
-      items.forEach((item) => {
-        const isActive = activeItem ? item.id === activeItem.id : false;
-        const city = item.city;
+      itemsIds.forEach((id) => {
+        const isActive = activeItem ? id === activeItem.id : false;
+        const city = items[id].city;
         const customIcon = leaflet.icon({
           iconUrl: isActive ? `img/pin-active.svg` : `img/pin.svg`,
           iconSize: [27, 39]
@@ -57,7 +58,7 @@ const MapComponent = (props) => {
         .bindPopup(city.name);
       });
     }
-  }, [items, activeItem, mapSettings]);
+  }, [items, itemsIds, activeItem, mapSettings]);
 
   return (
     <div style={{height: `100%`}} ref={mapRef}/>
@@ -65,10 +66,13 @@ const MapComponent = (props) => {
 };
 
 MapComponent.propTypes = {
-  /** Список карточек предложений */
-  items: PropTypes.arrayOf(OfferCardTypes),
+  /** Список идентификаторов карточек предложений */
+  itemsIds: PropTypes.arrayOf(PropTypes.number),
+  /** Map - объект идентифыикаторо карточки на данные карточки предложения */
+  items: PropTypes.object,
   /** Данные выбранной карточки */
   activeItem: OfferCardTypes,
 };
 
+export const MapComponentWrapped = withMapComponent(MapComponent);
 export default MapComponent;

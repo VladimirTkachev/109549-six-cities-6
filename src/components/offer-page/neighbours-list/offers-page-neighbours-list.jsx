@@ -2,15 +2,16 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import OfferCard from "Project/components/offer-card/OfferCard";
-import {OfferCardTypes} from "Project/prop-types/offer-card";
 
-const NeighboursList = ({items}) => {
+const NeighboursList = ({items, itemsIds}) => {
   return (
     <div className="near-places__list places__list">
-      {items.map((it, index) => {
+      {itemsIds.map((id, index) => {
+        const card = items[id];
+
         return (
-          <OfferCard key={`${it.id}#${index}`}
-            item={it}/>
+          <OfferCard key={`${id}#${index}`}
+            item={card}/>
         );
       })}
     </div>
@@ -18,8 +19,10 @@ const NeighboursList = ({items}) => {
 };
 
 NeighboursList.propTypes = {
-  /** Список элементов */
-  items: PropTypes.arrayOf(OfferCardTypes).isRequired,
+  /** Список идентификаторов карточек соседних предложений */
+  itemsIds: PropTypes.arrayOf(PropTypes.number),
+  /** Map - объект идентифыикаторо карточки на данные карточки предложения */
+  items: PropTypes.object,
 };
 
 export default NeighboursList;
