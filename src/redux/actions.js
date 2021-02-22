@@ -1,7 +1,8 @@
 import {
   SELECT_CITY,
   STORE_CITIES,
-  STORE_OFFERS
+  STORE_OFFERS,
+  CHANGE_SORT,
 } from "./action-types";
 
 const selectCity = (city) => {
@@ -20,7 +21,7 @@ const storeCities = (cities) => {
 
 const storeOffers = (offersIdsMap, offerCardsMap) => {
   return {
-    action: STORE_OFFERS,
+    type: STORE_OFFERS,
     payload: {
       offersIdsMap,
       offerCardsMap,
@@ -28,8 +29,16 @@ const storeOffers = (offersIdsMap, offerCardsMap) => {
   };
 };
 
+const changeSort = (sort) => {
+  return {
+    type: CHANGE_SORT,
+    payload: sort,
+  };
+};
+
 export {
   selectCity,
   storeCities,
   storeOffers,
+  changeSort,
 };

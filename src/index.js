@@ -5,7 +5,7 @@ import {Provider} from "react-redux";
 import {composeWithDevTools} from "redux-devtools-extension";
 
 import App from "./components/app/App";
-import {Username, Sort, FavoritesList, Reviewers} from "./mocks/offer";
+import {Username, FavoritesList, Reviewers} from "./mocks/offer";
 import reducer from "./redux/reducer";
 
 const store = createStore(reducer, composeWithDevTools());
@@ -13,7 +13,6 @@ const store = createStore(reducer, composeWithDevTools());
 ReactDom.render(
     <Provider store={store}>
       <App username={Username}
-        sort={Sort}
         reviewers={Reviewers}
         favoritesList={FavoritesList}/>
     </Provider>,

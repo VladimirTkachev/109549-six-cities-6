@@ -10,16 +10,14 @@ import {OfferPageWrapped} from "Project/components/offer-page/OfferPage";
 import NotFoundPage from "Project/components/not-found-page/NotFoundPage";
 
 const App = (props) => {
-  const {username, sort, favoritesList, reviewers} = props;
+  const {username, favoritesList, reviewers} = props;
 
   return (
     <>
       <Router>
         <Switch>
           <Route path="/" exact>
-            <MainPageWrapped username={username}
-              sort={sort}
-              selectedSort={sort[0]}/>
+            <MainPageWrapped username={username}/>
           </Route>
           <Route path="/login" exact>
             <SignInPage/>
@@ -44,15 +42,6 @@ const App = (props) => {
 App.propTypes = {
   /** Имя пользователя */
   username: PropTypes.string.isRequired,
-  /** Список сортировки */
-  sort: PropTypes.arrayOf(
-      PropTypes.shape({
-        /** Подпись */
-        label: PropTypes.string.isRequired,
-        /** Значение */
-        value: PropTypes.string.isRequired,
-      }).isRequired,
-  ),
   /** Список выбранных городов */
   favoritesList: PropTypes.arrayOf(
       PropTypes.shape({

@@ -5,11 +5,12 @@ import {Link} from "react-router-dom";
 import {MapComponentWrapped} from "Project/components/map-component/MapComponent";
 import {OffersListWrapped} from "Project/components/offers-list/OffersList";
 import {CitiesListWrapped} from "Project/components/cities-list/CitiesList";
+import {SortComponentWrapped} from "Project/components/sort-component/SortComponent";
 
 import withMainPage from "./hocs/with-main-page.js";
 
 const MainPage = (props) => {
-  const {username, sort, selectedSort, offersIds} = props;
+  const {username, selectedSort, offersIds} = props;
   const [activeItem, setActiveItem] = useState(null);
   const handleMouseEnter = useCallback((item) => {
     setActiveItem(item);
@@ -102,29 +103,17 @@ const MainPage = (props) => {
                       <use xlinkHref="#icon-arrow-select"/>
                     </svg>
                   </span>
-                  <ul className="places__options places__options--custom places__options--opened">
-                    {sort.map((it) => {
-                      const active = it.value === selectedSort.value ? `places__option--active` : ``;
-
-                      return (
-                        <li key={it.value}
-                          className={`places__option ${active}`}
-                          tabIndex="0">
-                          {it.label}
-                        </li>
-                      );
-                    })}
-                  </ul>
+                  <SortComponentWrapped/>
                 </form>
                 <OffersListWrapped
-                  itemsIds={offersIds}
+                  itemsIds={offersIds.map((it) => it)}
                   onMouseEnter={handleMouseEnter}
                   onMouseLeave={handleMouseLeave}/>
               </section>
               <div className="cities__right-section">
                 <section className="cities__map map">
                   <MapComponentWrapped
-                    itemsIds={offersIds}
+                    itemsIds={offersIds.map((it) => it)}
                     activeItem={activeItem}/>
                 </section>
               </div>
@@ -146,8 +135,6 @@ const LabelValueType = PropTypes.shape({
 MainPage.propTypes = {
   /** Имя пользователя */
   username: PropTypes.string.isRequired,
-  /** Список сортировка */
-  sort: PropTypes.arrayOf(LabelValueType),
   /** Данные выбранной сортировки */
   selectedSort: LabelValueType.isRequired,
   /** Список идентификаторов карточек предложений */

@@ -4,12 +4,18 @@ import {
   SELECT_CITY,
   STORE_CITIES,
   STORE_OFFERS,
+  CHANGE_SORT,
 } from "./action-types";
 
 const initialState = {
+  /** Данные выбранного варианта сортировки */
+  sort: {
+    label: `Popular`,
+    value: `popular`,
+  },
   /** Данные карточек предложений */
   offers: {
-    /** Map - объект идентификаторов городов к массиву идентификаторов карточе предложений */
+    /** Map - объект идентификаторов городов к массиву идентификаторов карточек предложений */
     offersIdsMap: {
       111: [1, 2, 3, 4, 5],
       222: [1, 2, 3, 4, 5],
@@ -46,6 +52,11 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case CHANGE_SORT:
+      return {
+        ...state,
+        sort: action.payload,
+      };
     case SELECT_CITY:
       return {
         ...state,
