@@ -189,7 +189,8 @@ const OfferPage = (props) => {
                   <h2 className="near-places__title">
                     Other places in the neighbourhood
                   </h2>
-                  <NeighboursList items={items}
+                  <NeighboursList
+                    items={items}
                     itemsIds={neightbours[id]}/>
                 </>
               )}

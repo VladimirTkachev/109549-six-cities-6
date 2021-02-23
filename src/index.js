@@ -12,7 +12,8 @@ const store = createStore(reducer, composeWithDevTools());
 
 ReactDom.render(
     <Provider store={store}>
-      <App username={Username}
+      <App
+        username={Username}
         reviewers={Reviewers}
         favoritesList={FavoritesList}/>
     </Provider>,

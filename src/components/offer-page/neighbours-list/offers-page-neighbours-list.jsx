@@ -10,7 +10,8 @@ const NeighboursList = ({items, itemsIds}) => {
         const card = items[id];
 
         return (
-          <OfferCard key={`${id}#${index}`}
+          <OfferCard
+            key={`${id}#${index}`}
             item={card}/>
         );
       })}

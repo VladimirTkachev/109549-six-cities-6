@@ -12,6 +12,7 @@ import withMainPage from "./hocs/with-main-page.js";
 const MainPage = (props) => {
   const {username, selectedSort, offersIds} = props;
   const [activeItem, setActiveItem] = useState(null);
+  const numberOfPlaces = offersIds.length;
   const handleMouseEnter = useCallback((item) => {
     setActiveItem(item);
   }, []);
@@ -86,7 +87,7 @@ const MainPage = (props) => {
                   Places
                 </h2>
                 <b className="places__found">
-                  {`${offersIds.length} places to stay in Amsterdam`}
+                  {`${numberOfPlaces} places to stay in Amsterdam`}
                 </b>
                 <form className="places__sorting"
                   action="#"

@@ -27,7 +27,8 @@ const App = (props) => {
               items={favoritesList}/>
           </Route>
           <Route path="/offer/:id" exact>
-            <OfferPageWrapped username={username}
+            <OfferPageWrapped
+              username={username}
               reviewers={reviewers}/>
           </Route>
           <Route>
