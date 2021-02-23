@@ -113,8 +113,8 @@ const MainPage = (props) => {
               </section>
               <div className="cities__right-section">
                 <section className="cities__map map">
+                  {/** TODO: Удалить map после того как начнут приходить данные с сервера*/}
                   <MapComponentWrapped
-                    //TODO: Удалить map после того как начнут приходить данные с сервера
                     itemsIds={offersIds.map((it) => it)}
                     activeItem={activeItem}/>
                 </section>
