@@ -2,13 +2,17 @@ import React, {useCallback, useState} from "react";
 import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
 
-import MapComponent from "Project/components/map-component/MapComponent";
-import {OfferCardTypes} from "Project/prop-types/offer-card";
-import OffersList from "Project/components/offers-list/OffersList";
+import {MapComponentWrapped} from "Project/components/map-component/MapComponent";
+import {OffersListWrapped} from "Project/components/offers-list/OffersList";
+import {CitiesListWrapped} from "Project/components/cities-list/CitiesList";
+import {SortComponentWrapped} from "Project/components/sort-component/SortComponent";
+
+import withMainPage from "./hocs/with-main-page.js";
 
 const MainPage = (props) => {
-  const {username, title, sort, selectedSort, selectedCity, citiesList, offersCards} = props;
+  const {username, selectedSort, offersIds} = props;
   const [activeItem, setActiveItem] = useState(null);
+  const numberOfPlaces = offersIds.length;
   const handleMouseEnter = useCallback((item) => {
     setActiveItem(item);
   }, []);
@@ -73,23 +77,7 @@ const MainPage = (props) => {
           </h1>
           <div className="tabs">
             <section className="locations container">
-              <ul className="locations__list tabs__list">
-                {citiesList.map((it) => {
-                  const active = it.id === selectedCity.id ? `tabs__item--active` : ``;
-
-                  return (
-                    <li key={it.id}
-                      className="locations__item">
-                      <Link className={`locations__item-link tabs__item ${active}`}
-                        to="#">
-                        <span>
-                          {it.name}
-                        </span>
-                      </Link>
-                    </li>
-                  );
-                })}
-              </ul>
+              <CitiesListWrapped/>
             </section>
           </div>
           <div className="cities">
@@ -99,7 +87,7 @@ const MainPage = (props) => {
                   Places
                 </h2>
                 <b className="places__found">
-                  {title}
+                  {`${numberOfPlaces} places to stay in Amsterdam`}
                 </b>
                 <form className="places__sorting"
                   action="#"
@@ -116,28 +104,17 @@ const MainPage = (props) => {
                       <use xlinkHref="#icon-arrow-select"/>
                     </svg>
                   </span>
-                  <ul className="places__options places__options--custom places__options--opened">
-                    {sort.map((it) => {
-                      const active = it.value === selectedSort.value ? `places__option--active` : ``;
-
-                      return (
-                        <li key={it.value}
-                          className={`places__option ${active}`}
-                          tabIndex="0">
-                          {it.label}
-                        </li>
-                      );
-                    })}
-                  </ul>
+                  <SortComponentWrapped/>
                 </form>
-                <OffersList
-                  items={offersCards}
+                <OffersListWrapped
+                  itemsIds={offersIds.map((it) => it)}
                   onMouseEnter={handleMouseEnter}
                   onMouseLeave={handleMouseLeave}/>
               </section>
               <div className="cities__right-section">
                 <section className="cities__map map">
-                  <MapComponent items={offersCards}
+                  <MapComponentWrapped
+                    itemsIds={offersIds.map((it) => it)}
                     activeItem={activeItem}/>
                 </section>
               </div>
@@ -156,28 +133,14 @@ const LabelValueType = PropTypes.shape({
   value: PropTypes.string.isRequired,
 });
 
-const CityType = PropTypes.shape({
-  /** Имя */
-  name: PropTypes.string.isRequired,
-  /** Идентификатор */
-  id: PropTypes.string.isRequired,
-});
-
 MainPage.propTypes = {
   /** Имя пользователя */
   username: PropTypes.string.isRequired,
-  /** Список городов */
-  citiesList: PropTypes.arrayOf(CityType.isRequired),
-  /** Выбранный город */
-  selectedCity: CityType.isRequired,
-  /** Подпись страницы выбора предложений */
-  title: PropTypes.string.isRequired,
-  /** Список сортировка */
-  sort: PropTypes.arrayOf(LabelValueType),
   /** Данные выбранной сортировки */
   selectedSort: LabelValueType.isRequired,
-  /** Список карточек предложений */
-  offersCards: PropTypes.arrayOf(OfferCardTypes).isRequired,
+  /** Список идентификаторов карточек предложений */
+  offersIds: PropTypes.arrayOf(PropTypes.number),
 };
 
+export const MainPageWrapped = withMainPage(MainPage);
 export default MainPage;

@@ -1,21 +1,21 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef} from "react";
 import PropTypes from "prop-types";
-// Библиотека для работы с картами
 import leaflet from "leaflet";
 import "leaflet/dist/leaflet.css";
 
 import {OfferCardTypes} from "Project/prop-types/offer-card";
 
+import withMapComponent from "./hocs/with-map-component.js";
+
 const MapComponent = (props) => {
-  const {items, activeItem} = props;
+  const {items, itemsIds, activeItem} = props;
   const mapRef = useRef(null);
-  const [mapSettings, setMapSettings] = useState(null);
-  const [firstItem = {}] = items;
+  const [firstId] = itemsIds;
 
   useEffect(() => {
-    const city = firstItem.city;
+    const city = items[firstId].city;
 
-    const settings = leaflet.map(mapRef.current, {
+    mapRef.current = leaflet.map(`map`, {
       center: {
         lat: city.location.latitude,
         lng: city.location.longitude
@@ -27,20 +27,18 @@ const MapComponent = (props) => {
       .tileLayer(`https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png`, {
         attribution: `&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>`
       })
-      .addTo(settings);
-
-    setMapSettings(settings);
+      .addTo(mapRef.current);
 
     return () => {
       mapRef.current.remove();
     };
-  }, [mapRef, firstItem, setMapSettings]);
+  }, [mapRef, firstId, items]);
 
   useEffect(() => {
-    if (mapSettings) {
-      items.forEach((item) => {
-        const isActive = activeItem ? item.id === activeItem.id : false;
-        const city = item.city;
+    if (mapRef.current) {
+      itemsIds.forEach((id) => {
+        const isActive = activeItem ? id === activeItem.id : false;
+        const city = items[id].city;
         const customIcon = leaflet.icon({
           iconUrl: isActive ? `img/pin-active.svg` : `img/pin.svg`,
           iconSize: [27, 39]
@@ -53,22 +51,25 @@ const MapComponent = (props) => {
         {
           icon: customIcon
         })
-        .addTo(mapSettings)
+        .addTo(mapRef.current)
         .bindPopup(city.name);
       });
     }
-  }, [items, activeItem, mapSettings]);
+  }, [items, itemsIds, activeItem, mapRef]);
 
   return (
-    <div style={{height: `100%`}} ref={mapRef}/>
+    <div id="map" style={{height: `100%`}} ref={mapRef}/>
   );
 };
 
 MapComponent.propTypes = {
-  /** Список карточек предложений */
-  items: PropTypes.arrayOf(OfferCardTypes),
+  /** Список идентификаторов карточек предложений */
+  itemsIds: PropTypes.arrayOf(PropTypes.number),
+  /** Map - объект идентифыикаторо карточки на данные карточки предложения */
+  items: PropTypes.object,
   /** Данные выбранной карточки */
   activeItem: OfferCardTypes,
 };
 
+export const MapComponentWrapped = withMapComponent(MapComponent);
 export default MapComponent;

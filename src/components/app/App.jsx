@@ -3,27 +3,21 @@ import PropTypes from "prop-types";
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 
 import {ReviewersType, OfferCardTypes} from "Project/prop-types/offer-card";
-import MainPage from "Project/components/main-page/MainPage";
+import {MainPageWrapped} from "Project/components/main-page/MainPage";
 import SignInPage from "Project/components/sign-in-page/SignInPage";
 import FavoritesPage from "Project/components/favorites-page/FavoritePage";
-import OfferPage from "Project/components/offer-page/OfferPage";
+import {OfferPageWrapped} from "Project/components/offer-page/OfferPage";
 import NotFoundPage from "Project/components/not-found-page/NotFoundPage";
 
 const App = (props) => {
-  const {username, mainTitle, sort, citiesList, offersCards, favoritesList, reviewers} = props;
+  const {username, favoritesList, reviewers} = props;
 
   return (
     <>
       <Router>
         <Switch>
           <Route path="/" exact>
-            <MainPage username={username}
-              title={mainTitle}
-              sort={sort}
-              selectedSort={sort[0]}
-              citiesList={citiesList}
-              selectedCity={citiesList[3]}
-              offersCards={offersCards}/>
+            <MainPageWrapped username={username}/>
           </Route>
           <Route path="/login" exact>
             <SignInPage/>
@@ -33,10 +27,9 @@ const App = (props) => {
               items={favoritesList}/>
           </Route>
           <Route path="/offer/:id" exact>
-            <OfferPage username={username}
-              items={offersCards}
-              reviewers={reviewers}
-              neighboursList={offersCards.slice(0, 3)}/>
+            <OfferPageWrapped
+              username={username}
+              reviewers={reviewers}/>
           </Route>
           <Route>
             <NotFoundPage/>
@@ -50,28 +43,6 @@ const App = (props) => {
 App.propTypes = {
   /** Имя пользователя */
   username: PropTypes.string.isRequired,
-  /** Список городов */
-  citiesList: PropTypes.arrayOf(
-      PropTypes.shape({
-        /** Имя */
-        name: PropTypes.string.isRequired,
-        /** Идентификатор */
-        id: PropTypes.string.isRequired,
-      }).isRequired,
-  ),
-  /** Подпись страницы выбора предложений */
-  mainTitle: PropTypes.string.isRequired,
-  /** Список сортировки */
-  sort: PropTypes.arrayOf(
-      PropTypes.shape({
-        /** Подпись */
-        label: PropTypes.string.isRequired,
-        /** Значение */
-        value: PropTypes.string.isRequired,
-      }).isRequired,
-  ),
-  /** Список карточек предложений */
-  offersCards: PropTypes.arrayOf(OfferCardTypes).isRequired,
   /** Список выбранных городов */
   favoritesList: PropTypes.arrayOf(
       PropTypes.shape({

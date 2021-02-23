@@ -1,0 +1,13 @@
+const SELECT_CITY = `@city/SELECT_CITY`;
+const STORE_CITIES = `@city/STORE_CITIES`;
+
+const STORE_OFFERS = `@favorite/STORE_OFFERS`;
+
+const CHANGE_SORT = `@sort/CHANGE_SORT`;
+
+export {
+  SELECT_CITY,
+  STORE_CITIES,
+  STORE_OFFERS,
+  CHANGE_SORT,
+};

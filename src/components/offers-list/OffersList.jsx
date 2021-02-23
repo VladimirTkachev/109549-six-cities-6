@@ -1,18 +1,21 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import {OfferCardTypes} from "../../prop-types/offer-card";
-import OfferCard from "../offer-card/OfferCard";
+import OfferCard from "Project/components/offer-card/OfferCard";
+
+import withOffersList from "./hoc/with-offers-list";
 
 const OffersList = (props) => {
-  const {items, onMouseEnter, onMouseLeave} = props;
+  const {items, itemsIds, onMouseEnter, onMouseLeave} = props;
 
   return (
     <div className="cities__places-list places__list tabs__content">
-      {items.map((card) => {
+      {itemsIds.map((id) => {
+        const card = items[id];
+
         return (
           <OfferCard
-            key={`${card.id}`}
+            key={`${id}`}
             item={card}
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}/>
@@ -23,12 +26,15 @@ const OffersList = (props) => {
 };
 
 OffersList.propTypes = {
-  /** Список карточек предложений */
-  items: PropTypes.arrayOf(OfferCardTypes).isRequired,
+  /** Список идентификаторов карточек предложений */
+  itemsIds: PropTypes.arrayOf(PropTypes.number),
+  /** Map - объект идентифыикаторо карточки на данные карточки предложения */
+  items: PropTypes.object,
   /** Обработчик мыши при наведении на элемент */
   onMouseEnter: PropTypes.func.isRequired,
   /** Обработчик мыши при уходе с элемента */
   onMouseLeave: PropTypes.func.isRequired,
 };
 
+export const OffersListWrapped = withOffersList(OffersList);
 export default OffersList;
