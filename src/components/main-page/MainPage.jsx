@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from "react";
+import React, {useCallback, useState, useEffect} from "react";
 import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
 
@@ -6,19 +6,34 @@ import {MapComponentWrapped} from "Project/components/map-component/MapComponent
 import {OffersListWrapped} from "Project/components/offers-list/OffersList";
 import {CitiesListWrapped} from "Project/components/cities-list/CitiesList";
 import {SortComponentWrapped} from "Project/components/sort-component/SortComponent";
+import Spinner from "Project/components/spinner/Spinner";
 
 import withMainPage from "./hocs/with-main-page.js";
 
 const MainPage = (props) => {
-  const {username, selectedSort, offersIds} = props;
+  const {username, selectedSort, offersIds, fetchOffersList} = props;
   const [activeItem, setActiveItem] = useState(null);
-  const numberOfPlaces = offersIds.length;
+  const [fetching, setFetching] = useState(false);
   const handleMouseEnter = useCallback((item) => {
     setActiveItem(item);
   }, []);
   const handleMouseLeave = useCallback(() => {
     setActiveItem(null);
   }, []);
+
+  useEffect(() => {
+    setFetching(true);
+    fetchOffersList().then(() => {
+      setFetching(false);
+    });
+  }, [fetchOffersList]);
+
+  if (fetching || !offersIds.length) {
+    return (
+      <Spinner/>
+    );
+  }
+  const numberOfPlaces = offersIds.length;
 
   return (
     <>
@@ -107,15 +122,14 @@ const MainPage = (props) => {
                   <SortComponentWrapped/>
                 </form>
                 <OffersListWrapped
-                  itemsIds={offersIds.map((it) => it)}
+                  itemsIds={offersIds}
                   onMouseEnter={handleMouseEnter}
                   onMouseLeave={handleMouseLeave}/>
               </section>
               <div className="cities__right-section">
                 <section className="cities__map map">
-                  {/** TODO: Удалить map после того как начнут приходить данные с сервера*/}
                   <MapComponentWrapped
-                    itemsIds={offersIds.map((it) => it)}
+                    itemsIds={offersIds}
                     activeItem={activeItem}/>
                 </section>
               </div>
@@ -125,6 +139,10 @@ const MainPage = (props) => {
       </div>
     </>
   );
+};
+
+MainPage.defaultProps = {
+  fetchOffersList: () => undefined,
 };
 
 const LabelValueType = PropTypes.shape({
@@ -141,6 +159,8 @@ MainPage.propTypes = {
   selectedSort: LabelValueType.isRequired,
   /** Список идентификаторов карточек предложений */
   offersIds: PropTypes.arrayOf(PropTypes.number),
+  /** Получить список предложение */
+  fetchOffersList: PropTypes.func,
 };
 
 export const MainPageWrapped = withMainPage(MainPage);
