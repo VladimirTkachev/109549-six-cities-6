@@ -75,7 +75,7 @@ function getOffersIds(state) {
   const itemsIds = getOffersIdsMap(state)[city.id];
   const items = getOfferCardsMap(state);
 
-  return sorting(sort.value, itemsIds, items);
+  return itemsIds ? sorting(sort.value, [...itemsIds], items) : null;
 }
 
 function getOffersCount(state) {

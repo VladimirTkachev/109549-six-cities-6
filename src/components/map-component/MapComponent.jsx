@@ -38,21 +38,21 @@ const MapComponent = (props) => {
     if (mapRef.current) {
       itemsIds.forEach((id) => {
         const isActive = activeItem ? id === activeItem.id : false;
-        const city = items[id].city;
+        const item = items[id];
         const customIcon = leaflet.icon({
           iconUrl: isActive ? `img/pin-active.svg` : `img/pin.svg`,
           iconSize: [27, 39]
         });
 
         leaflet.marker({
-          lat: city.location.latitude,
-          lng: city.location.longitude
+          lat: item.location.latitude,
+          lng: item.location.longitude
         },
         {
           icon: customIcon
         })
         .addTo(mapRef.current)
-        .bindPopup(city.name);
+        .bindPopup(item.title);
       });
     }
   }, [items, itemsIds, activeItem, mapRef]);

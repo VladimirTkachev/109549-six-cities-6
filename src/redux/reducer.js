@@ -1,10 +1,11 @@
-import {CitiesList, OfferCards} from "Project/mocks/offer";
+import {CitiesList} from "Project/mocks/offer";
 
 import {
   SELECT_CITY,
   STORE_CITIES,
   STORE_OFFERS,
   CHANGE_SORT,
+  STORE_HOTEL_DATA,
 } from "./action-types";
 
 const initialState = {
@@ -16,42 +17,31 @@ const initialState = {
   /** Данные карточек предложений */
   offers: {
     /** Map - объект идентификаторов городов к массиву идентификаторов карточек предложений */
-    offersIdsMap: {
-      111: [1, 2, 3, 4, 5],
-      222: [1, 2, 3, 4, 5],
-      333: [1, 2, 3, 4, 5],
-      444: [1, 2, 3, 4, 5],
-      555: [1, 2, 3, 4, 5],
-      666: [1, 2, 3, 4, 5],
-    },
+    offersIdsMap: {},
     /** Map - объект идентификаторов карточек предложений на данные карточек */
-    offerCardsMap: {
-      1: OfferCards[0],
-      2: OfferCards[1],
-      3: OfferCards[2],
-      4: OfferCards[3],
-      5: OfferCards[4],
-    },
+    offerCardsMap: {},
     /** Map - объект идентификаторов карточек предложений на список идентификаторов карточек соседних предложений */
-    neightboursIdsMap: {
-      1: [1, 2, 3],
-      2: [2, 3, 4],
-      3: [3, 4, 5],
-      4: [1, 2, 5],
-      5: [1, 2, 3],
-    },
+    neightboursIdsMap: {},
   },
   /** Данные выбранного города */
-  selectedCity: {
-    id: `444`,
-    name: `Amsterdam`,
-  },
+  selectedCity: {},
   /** Список городов */
   cities: CitiesList,
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case STORE_HOTEL_DATA:
+      return {
+        ...state,
+        selectedCity: action.payload.city,
+        cities: action.payload.cities,
+        offers: {
+          ...state.offers,
+          offersIdsMap: action.payload.offersIdsMap,
+          offerCardsMap: action.payload.offerCardsMap,
+        },
+      };
     case CHANGE_SORT:
       return {
         ...state,
