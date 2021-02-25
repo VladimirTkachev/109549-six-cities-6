@@ -72,10 +72,10 @@ function getOfferCardsMap(state) {
 function getOffersIds(state) {
   const city = getSelectedCity(state);
   const sort = getSort(state);
-  const itemsIds = getOffersIdsMap(state)[city.id] || [];
+  const itemsIds = getOffersIdsMap(state)[city.id];
   const items = getOfferCardsMap(state);
 
-  return sorting(sort.value, [...itemsIds], items);
+  return itemsIds ? sorting(sort.value, [...itemsIds], items) : null;
 }
 
 function getOffersCount(state) {

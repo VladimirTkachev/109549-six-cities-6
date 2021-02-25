@@ -1,15 +1,13 @@
 import {toReducer} from "./utils";
-import {selectCity, storeCities, storeOffers} from "./actions";
+import {storeHotelData} from "./actions";
 
 function fetchOffersList() {
   return (dispatch, _getState, api) => {
     return api.get(`/hotels`).then(({data}) => {
       const {cities, offersIdsMap, offerCardsMap} = toReducer(data);
-      const [firstCity] = cities;
+      const [city] = cities;
 
-      dispatch(selectCity(firstCity));
-      dispatch(storeCities(cities));
-      dispatch(storeOffers(offersIdsMap, offerCardsMap));
+      dispatch(storeHotelData({cities, city, offersIdsMap, offerCardsMap}));
     });
   };
 }

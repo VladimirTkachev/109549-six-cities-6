@@ -5,6 +5,7 @@ import {
   STORE_CITIES,
   STORE_OFFERS,
   CHANGE_SORT,
+  STORE_HOTEL_DATA,
 } from "./action-types";
 
 const initialState = {
@@ -30,6 +31,17 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case STORE_HOTEL_DATA:
+      return {
+        ...state,
+        selectedCity: action.payload.city,
+        cities: action.payload.cities,
+        offers: {
+          ...state.offers,
+          offersIdsMap: action.payload.offersIdsMap,
+          offerCardsMap: action.payload.offerCardsMap,
+        },
+      };
     case CHANGE_SORT:
       return {
         ...state,

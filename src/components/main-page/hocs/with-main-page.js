@@ -13,4 +13,8 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, {fetchOffersList});
+const mapDispatchToProps = {
+  fetchOffersList,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps);

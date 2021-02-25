@@ -28,7 +28,7 @@ const MainPage = (props) => {
     });
   }, [fetchOffersList]);
 
-  if (fetching || !offersIds.length) {
+  if (fetching || !offersIds) {
     return (
       <Spinner/>
     );
@@ -142,7 +142,7 @@ const MainPage = (props) => {
 };
 
 MainPage.defaultProps = {
-  fetchOffersList: () => undefined,
+  fetchOffersList: () => {},
 };
 
 const LabelValueType = PropTypes.shape({

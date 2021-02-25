@@ -2,6 +2,7 @@ const SELECT_CITY = `@city/SELECT_CITY`;
 const STORE_CITIES = `@city/STORE_CITIES`;
 
 const STORE_OFFERS = `@favorite/STORE_OFFERS`;
+const STORE_HOTEL_DATA = `@favorite/STORE_HOTEL_DATA`;
 
 const CHANGE_SORT = `@sort/CHANGE_SORT`;
 
@@ -10,4 +11,5 @@ export {
   STORE_CITIES,
   STORE_OFFERS,
   CHANGE_SORT,
+  STORE_HOTEL_DATA,
 };
