@@ -4,6 +4,7 @@ import {
   STORE_OFFERS,
   CHANGE_SORT,
   STORE_HOTEL_DATA,
+  CHANGE_AUTH_STATUS,
 } from "./action-types";
 
 const selectCity = (city) => {
@@ -49,10 +50,15 @@ const storeHotelData = ({city, cities, offersIdsMap, offerCardsMap}) => {
   };
 };
 
+const changeAuthStatus = (value) => {
+  return {type: CHANGE_AUTH_STATUS, payload: value};
+};
+
 export {
   selectCity,
   storeCities,
   storeOffers,
   changeSort,
   storeHotelData,
+  changeAuthStatus,
 };

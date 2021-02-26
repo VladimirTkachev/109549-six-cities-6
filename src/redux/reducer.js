@@ -6,6 +6,7 @@ import {
   STORE_OFFERS,
   CHANGE_SORT,
   STORE_HOTEL_DATA,
+  CHANGE_AUTH_STATUS,
 } from "./action-types";
 
 const initialState = {
@@ -27,10 +28,17 @@ const initialState = {
   selectedCity: {},
   /** Список городов */
   cities: CitiesList,
+  /** Статус авторизации пользователя */
+  authorizationStatus: false,
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case CHANGE_AUTH_STATUS:
+      return {
+        ...state,
+        authorizationStatus: action.payload,
+      };
     case STORE_HOTEL_DATA:
       return {
         ...state,

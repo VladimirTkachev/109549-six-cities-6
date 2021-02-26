@@ -90,6 +90,10 @@ function getSort(state) {
   return state.sort;
 }
 
+function getAuthStatus(state) {
+  return state.authorizationStatus;
+}
+
 export {
   SortTypes,
   getSelectedCity,
@@ -101,4 +105,5 @@ export {
   getOffersCount,
   getNeightboursIdsMap,
   getSort,
+  getAuthStatus,
 };
