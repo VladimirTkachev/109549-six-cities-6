@@ -4,7 +4,7 @@ import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 
 import {ReviewersType, OfferCardTypes} from "Project/prop-types/offer-card";
 import {MainPageWrapped} from "Project/components/main-page/MainPage";
-import SignInPage from "Project/components/sign-in-page/SignInPage";
+import {SignInPageWrapped} from "Project/components/sign-in-page/SignInPage";
 import FavoritesPage from "Project/components/favorites-page/FavoritePage";
 import {OfferPageWrapped} from "Project/components/offer-page/OfferPage";
 import NotFoundPage from "Project/components/not-found-page/NotFoundPage";
@@ -17,10 +17,10 @@ const App = (props) => {
       <Router>
         <Switch>
           <Route path="/" exact>
-            <MainPageWrapped username={username}/>
+            <MainPageWrapped/>
           </Route>
           <Route path="/login" exact>
-            <SignInPage/>
+            <SignInPageWrapped/>
           </Route>
           <Route path="/favorites" exact>
             <FavoritesPage username={username}

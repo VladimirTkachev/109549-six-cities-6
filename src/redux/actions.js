@@ -5,6 +5,7 @@ import {
   CHANGE_SORT,
   STORE_HOTEL_DATA,
   CHANGE_AUTH_STATUS,
+  STORE_USER_DATA,
 } from "./action-types";
 
 const selectCity = (city) => {
@@ -54,6 +55,10 @@ const changeAuthStatus = (value) => {
   return {type: CHANGE_AUTH_STATUS, payload: value};
 };
 
+const storeUserData = (data) => {
+  return {type: STORE_USER_DATA, payload: data};
+};
+
 export {
   selectCity,
   storeCities,
@@ -61,4 +66,5 @@ export {
   changeSort,
   storeHotelData,
   changeAuthStatus,
+  storeUserData,
 };

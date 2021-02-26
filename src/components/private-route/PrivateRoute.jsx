@@ -23,9 +23,13 @@ const PrivateRoute = (props) => {
 };
 
 PrivateRoute.propTypes = {
+  /** Статус авторизации пользователя */
   authStatus: PropTypes.bool.isRequired,
+  /** ТОчное совпадение пути */
   exact: PropTypes.bool.isRequired,
+  /** Путь */
   path: PropTypes.string.isRequired,
+  /** Функция отображающая контент по переданному пути */
   render: PropTypes.func.isRequired,
 };
 

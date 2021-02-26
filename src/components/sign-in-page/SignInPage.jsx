@@ -1,7 +1,24 @@
-import React from "react";
-import {Link} from "react-router-dom";
+import React, {useRef} from "react";
+import PropTypes from "prop-types";
+import {Link, useHistory} from "react-router-dom";
 
-const SignInPage = () => {
+import withSignInPage from "./hocs/with-sign-in-page";
+
+const SignInPage = ({onLogin}) => {
+  const loginRef = useRef(null);
+  const passwordRef = useRef(null);
+  const history = useHistory();
+
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+
+    onLogin({
+      login: loginRef.current.value,
+      password: passwordRef.current.value,
+    })
+    .then(() => history.push(`/`));
+  };
+
   return (
     <>
       <div style={{display: `none`}}>
@@ -63,7 +80,8 @@ const SignInPage = () => {
               </h1>
               <form className="login__form form"
                 action="#"
-                method="post">
+                method="post"
+                onSubmit={handleSubmit}>
                 <div className="login__input-wrapper form__input-wrapper">
                   <label className="visually-hidden">
                     E-mail
@@ -72,7 +90,8 @@ const SignInPage = () => {
                     type="email"
                     name="email"
                     placeholder="Email"
-                    required=""/>
+                    required=""
+                    ref={loginRef}/>
                 </div>
                 <div className="login__input-wrapper form__input-wrapper">
                   <label className="visually-hidden">
@@ -82,7 +101,8 @@ const SignInPage = () => {
                     type="password"
                     name="password"
                     placeholder="Password"
-                    required=""/>
+                    required=""
+                    ref={passwordRef}/>
                 </div>
                 <button className="login__submit form__submit button"
                   type="submit">
@@ -107,4 +127,14 @@ const SignInPage = () => {
   );
 };
 
+SignInPage.defaultProps = {
+  onLogin: () => {},
+};
+
+SignInPage.propTypes = {
+  /** Отправить данные пользователя на сервер */
+  onLogin: PropTypes.func.isRequired,
+};
+
+export const SignInPageWrapped = withSignInPage(SignInPage);
 export default SignInPage;

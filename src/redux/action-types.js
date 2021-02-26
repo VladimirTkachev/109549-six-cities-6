@@ -7,6 +7,7 @@ const STORE_HOTEL_DATA = `@favorite/STORE_HOTEL_DATA`;
 const CHANGE_SORT = `@sort/CHANGE_SORT`;
 
 const CHANGE_AUTH_STATUS = `@auth/CHANGE_AUTH_STATUS`;
+const STORE_USER_DATA = `@auth/STORE_USER_DATA`;
 
 export {
   SELECT_CITY,
@@ -15,4 +16,5 @@ export {
   CHANGE_SORT,
   STORE_HOTEL_DATA,
   CHANGE_AUTH_STATUS,
+  STORE_USER_DATA,
 };

@@ -94,6 +94,18 @@ function getAuthStatus(state) {
   return state.authorizationStatus;
 }
 
+function getUserData(state) {
+  return state.user;
+}
+
+function getUsername(state) {
+  return getUserData(state).name;
+}
+
+function getEmail(state) {
+  return getUserData(state).email;
+}
+
 export {
   SortTypes,
   getSelectedCity,
@@ -106,4 +118,7 @@ export {
   getNeightboursIdsMap,
   getSort,
   getAuthStatus,
+  getUserData,
+  getUsername,
+  getEmail,
 };

@@ -1,7 +1,8 @@
 import {toReducer} from "./utils";
 import {
   storeHotelData,
-  changeAuthStatus
+  changeAuthStatus,
+  storeUserData,
 } from "./actions";
 
 function fetchOffersList() {
@@ -18,7 +19,14 @@ function fetchOffersList() {
 function login({login: email, password}) {
   return (dispatch, _getState, api) => {
     return api.post(`/login`, {email, password})
-      .then(() => dispatch(changeAuthStatus(true)));
+      .then(({data}) => {
+        dispatch(changeAuthStatus(true));
+        dispatch(storeUserData({
+          ...data,
+          avatarUrl: data[`avatar_url`],
+          isPro: data[`is_pro`],
+        }));
+      });
   };
 }
 
