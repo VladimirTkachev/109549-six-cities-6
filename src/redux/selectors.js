@@ -102,6 +102,10 @@ function getNotifications(state) {
   return state.notifications;
 }
 
+function getCommentsMap(state) {
+  return state.commentsMap;
+}
+
 export {
   SortTypes,
   getSelectedCity,
@@ -116,4 +120,5 @@ export {
   getAuthStatus,
   getUserData,
   getNotifications,
+  getCommentsMap,
 };

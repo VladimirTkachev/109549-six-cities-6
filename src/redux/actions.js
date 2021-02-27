@@ -4,10 +4,12 @@ import {
   STORE_OFFERS,
   CHANGE_SORT,
   STORE_HOTEL_DATA,
+  UPDATE_OFFER,
   CHANGE_AUTH_STATUS,
   STORE_USER_DATA,
   APPEND_NOTIFICATION,
   REMOVE_NOTIFICATION,
+  STORE_COMMENTS,
 } from "./action-types";
 
 const selectCity = (city) => {
@@ -53,6 +55,14 @@ const storeHotelData = ({city, cities, offersIdsMap, offerCardsMap}) => {
   };
 };
 
+const updateOffer = (offer, id) => {
+  return {
+    type: UPDATE_OFFER,
+    payload: offer,
+    meta: id,
+  };
+};
+
 const changeAuthStatus = (value) => {
   return {type: CHANGE_AUTH_STATUS, payload: value};
 };
@@ -75,14 +85,24 @@ const removeNotification = (id) => {
   };
 };
 
+const storeComments = (comments, id) => {
+  return {
+    type: STORE_COMMENTS,
+    payload: comments,
+    meta: id,
+  };
+};
+
 export {
   selectCity,
   storeCities,
   storeOffers,
+  updateOffer,
   changeSort,
   storeHotelData,
   changeAuthStatus,
   storeUserData,
   appendNotification,
   removeNotification,
+  storeComments,
 };

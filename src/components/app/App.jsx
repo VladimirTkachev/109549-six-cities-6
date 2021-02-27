@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 
-import {ReviewersType, OfferCardTypes} from "Project/prop-types/offer-card";
+import {OfferCardTypes} from "Project/prop-types/offer-card";
 import {MainPageWrapped} from "Project/components/main-page/MainPage";
 import {SignInPageWrapped} from "Project/components/sign-in-page/SignInPage";
 import FavoritesPage from "Project/components/favorites-page/FavoritePage";
@@ -10,7 +10,7 @@ import {OfferPageWrapped} from "Project/components/offer-page/OfferPage";
 import NotFoundPage from "Project/components/not-found-page/NotFoundPage";
 
 const App = (props) => {
-  const {username, favoritesList, reviewers} = props;
+  const {username, favoritesList} = props;
 
   return (
     <>
@@ -27,9 +27,7 @@ const App = (props) => {
               items={favoritesList}/>
           </Route>
           <Route path="/offer/:id" exact>
-            <OfferPageWrapped
-              username={username}
-              reviewers={reviewers}/>
+            <OfferPageWrapped/>
           </Route>
           <Route>
             <NotFoundPage/>
@@ -54,8 +52,6 @@ App.propTypes = {
         items: PropTypes.arrayOf(OfferCardTypes).isRequired,
       }),
   ),
-  /** Список комментариев пользователей */
-  reviewers: PropTypes.arrayOf(ReviewersType).isRequired,
 };
 
 export default App;

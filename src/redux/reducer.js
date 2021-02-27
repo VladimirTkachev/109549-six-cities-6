@@ -4,12 +4,14 @@ import {
   SELECT_CITY,
   STORE_CITIES,
   STORE_OFFERS,
+  UPDATE_OFFER,
   CHANGE_SORT,
   STORE_HOTEL_DATA,
   CHANGE_AUTH_STATUS,
   STORE_USER_DATA,
   APPEND_NOTIFICATION,
   REMOVE_NOTIFICATION,
+  STORE_COMMENTS,
 } from "./action-types";
 
 const initialState = {
@@ -46,12 +48,22 @@ const initialState = {
     /** Имя пользователя */
     name: ``,
   },
+  /** Map - объект идентификаторов предложений на список комментариев */
+  commentsMap: {},
   /** Список уведомлений */
   notifications: [],
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case STORE_COMMENTS:
+      return {
+        ...state,
+        commentsMap: {
+          ...state.commentsMap,
+          [action.meta]: action.payload,
+        },
+      };
     case APPEND_NOTIFICATION:
       return {
         ...state,
@@ -84,6 +96,17 @@ export default (state = initialState, action) => {
           ...state.offers,
           offersIdsMap: action.payload.offersIdsMap,
           offerCardsMap: action.payload.offerCardsMap,
+        },
+      };
+    case UPDATE_OFFER:
+      return {
+        ...state,
+        offers: {
+          ...state.offers,
+          offerCardsMap: {
+            ...state.offers.offerCardsMap,
+            [action.meta]: action.payload,
+          },
         },
       };
     case CHANGE_SORT:
