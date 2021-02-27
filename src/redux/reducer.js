@@ -8,6 +8,8 @@ import {
   STORE_HOTEL_DATA,
   CHANGE_AUTH_STATUS,
   STORE_USER_DATA,
+  APPEND_NOTIFICATION,
+  REMOVE_NOTIFICATION,
 } from "./action-types";
 
 const initialState = {
@@ -44,10 +46,25 @@ const initialState = {
     /** Имя пользователя */
     name: ``,
   },
+  /** Список уведомлений */
+  notifications: [],
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case APPEND_NOTIFICATION:
+      return {
+        ...state,
+        notifications: [
+          ...state.notifications,
+          action.payload,
+        ],
+      };
+    case REMOVE_NOTIFICATION:
+      return {
+        ...state,
+        notifications: state.notifications.filter((it) => it.id !== action.meta),
+      };
     case CHANGE_AUTH_STATUS:
       return {
         ...state,

@@ -1,8 +1,11 @@
+import {v4 as uuid} from 'uuid';
+
 import {toReducer} from "./utils";
 import {
   storeHotelData,
   changeAuthStatus,
   storeUserData,
+  appendNotification,
 } from "./actions";
 
 function fetchOffersList() {
@@ -27,7 +30,13 @@ function login({login: email, password}) {
           isPro: data[`is_pro`],
         }));
       })
-      .catch(() => {});
+      .catch((error) => {
+        dispatch(appendNotification({
+          message: error.message,
+          type: `error`,
+          id: uuid(),
+        }));
+      });
   };
 }
 
@@ -35,7 +44,13 @@ function checkAuth() {
   return (dispatch, _getState, api) => {
     return api.get(`/login`)
       .then(() => dispatch(changeAuthStatus(true)))
-      .catch(() => {});
+      .catch((error) => {
+        dispatch(appendNotification({
+          message: error.message,
+          type: `error`,
+          id: uuid(),
+        }));
+      });
   };
 }
 

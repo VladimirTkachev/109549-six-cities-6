@@ -6,6 +6,8 @@ import {
   STORE_HOTEL_DATA,
   CHANGE_AUTH_STATUS,
   STORE_USER_DATA,
+  APPEND_NOTIFICATION,
+  REMOVE_NOTIFICATION,
 } from "./action-types";
 
 const selectCity = (city) => {
@@ -59,6 +61,20 @@ const storeUserData = (data) => {
   return {type: STORE_USER_DATA, payload: data};
 };
 
+const appendNotification = (notification) => {
+  return {
+    type: APPEND_NOTIFICATION,
+    payload: notification,
+  };
+};
+
+const removeNotification = (id) => {
+  return {
+    type: REMOVE_NOTIFICATION,
+    meta: id,
+  };
+};
+
 export {
   selectCity,
   storeCities,
@@ -67,4 +83,6 @@ export {
   storeHotelData,
   changeAuthStatus,
   storeUserData,
+  appendNotification,
+  removeNotification,
 };
