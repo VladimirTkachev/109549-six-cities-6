@@ -4,6 +4,7 @@ import {
   STORE_OFFERS,
   CHANGE_SORT,
   STORE_HOTEL_DATA,
+  UPDATE_OFFER,
   CHANGE_AUTH_STATUS,
   STORE_USER_DATA,
   APPEND_NOTIFICATION,
@@ -53,6 +54,14 @@ const storeHotelData = ({city, cities, offersIdsMap, offerCardsMap}) => {
   };
 };
 
+const updateOffer = (offer, id) => {
+  return {
+    type: UPDATE_OFFER,
+    payload: offer,
+    meta: id,
+  };
+};
+
 const changeAuthStatus = (value) => {
   return {type: CHANGE_AUTH_STATUS, payload: value};
 };
@@ -79,6 +88,7 @@ export {
   selectCity,
   storeCities,
   storeOffers,
+  updateOffer,
   changeSort,
   storeHotelData,
   changeAuthStatus,

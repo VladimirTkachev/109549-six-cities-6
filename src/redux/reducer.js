@@ -4,6 +4,7 @@ import {
   SELECT_CITY,
   STORE_CITIES,
   STORE_OFFERS,
+  UPDATE_OFFER,
   CHANGE_SORT,
   STORE_HOTEL_DATA,
   CHANGE_AUTH_STATUS,
@@ -84,6 +85,17 @@ export default (state = initialState, action) => {
           ...state.offers,
           offersIdsMap: action.payload.offersIdsMap,
           offerCardsMap: action.payload.offerCardsMap,
+        },
+      };
+    case UPDATE_OFFER:
+      return {
+        ...state,
+        offers: {
+          ...state.offers,
+          offerCardsMap: {
+            ...state.offers.offerCardsMap,
+            [action.meta]: action.payload,
+          },
         },
       };
     case CHANGE_SORT:
