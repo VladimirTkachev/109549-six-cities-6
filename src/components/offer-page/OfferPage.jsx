@@ -1,9 +1,9 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import {useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 
-import {ReviewersType} from "Project/prop-types/offer-card";
 import {MapComponentWrapped} from "Project/components/map-component/MapComponent";
+import Spinner from "Project/components/spinner/Spinner";
 
 import ImagesList from "./images-list/offer-page-images-list";
 import PropertyList from "./property-list/offer-card-property-list";
@@ -22,14 +22,32 @@ const OfferTypes = {
 };
 
 const OfferPage = (props) => {
-  const {items, username, reviewers, neightbours} = props;
+  const {items, email, authStatus, commentsMap, neightbours, updateOfferCard, fetchCommentsList, onSubmit} = props;
   const id = Number(useParams().id);
-  const item = items[id];
-  const {images, isPremium, isFavorite, title, description, rating, type, bedrooms, maxAdults, price, goods, host} = item || {};
+  const [fetching, setFetching] = useState(true);
+
+  useEffect(() => {
+    updateOfferCard(id).then(() => {
+      setFetching(false);
+    });
+  }, [id, updateOfferCard]);
+
+  useEffect(() => {
+    fetchCommentsList(id);
+  }, [id, fetchCommentsList]);
+
+  if (fetching) {
+    return (
+      <Spinner/>
+    );
+  }
+
+  const item = items[id] || {};
+  const comments = commentsMap[id] || [];
+  const {images, isPremium, isFavorite, title, description, rating, type, bedrooms, maxAdults, price, goods, host = {}} = item;
   const bookMarkActiveClass = isFavorite
     ? `property__bookmark-button--active` : ``;
   const hostProClass = host.isPro ? `property__avatar-wrapper--pro` : ``;
-  const offerReviewer = reviewers.filter((reviewer) => reviewer.id === item.id);
   const hasNeighboursList = neightbours[id] && !!neightbours[id].length;
 
   return (
@@ -66,13 +84,14 @@ const OfferPage = (props) => {
               <nav className="header__nav">
                 <ul className="header__nav-list">
                   <li className="header__nav-item user">
-                    <a className="header__nav-link header__nav-link--profile" href="#">
+                    <Link className="header__nav-link header__nav-link--profile"
+                      to={authStatus ? `` : `/login`}>
                       <div className="header__avatar-wrapper user__avatar-wrapper">
                       </div>
                       <span className="header__user-name user__name">
-                        {username}
+                        {authStatus ? email : `Sign in`}
                       </span>
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               </nav>
@@ -169,10 +188,10 @@ const OfferPage = (props) => {
                   <h2 className="reviews__title">
                     Reviews &middot;
                     <span className="reviews__amount">
-                      {offerReviewer.length}
+                      {comments.length}
                     </span>
                   </h2>
-                  <ReviewersList items={offerReviewer}/>
+                  <ReviewersList items={comments}/>
                 </section>
               </div>
             </div>
@@ -194,7 +213,9 @@ const OfferPage = (props) => {
                     itemsIds={neightbours[id]}/>
                 </>
               )}
-              <CommentForm/>
+              {authStatus && (
+                <CommentForm id={id} onSubmit={onSubmit}/>
+              )}
             </section>
           </div>
         </main>
@@ -203,15 +224,29 @@ const OfferPage = (props) => {
   );
 };
 
+OfferPage.defaultProps = {
+  updateOfferCard: () => {},
+  fetchCommentsList: () => {},
+  onSubmit: () => {},
+};
+
 OfferPage.propTypes = {
-  /** Имя пользователя */
-  username: PropTypes.string.isRequired,
+  /** email пользователя */
+  email: PropTypes.string.isRequired,
   /** Map - объект идентифыикаторо карточки на данные карточки предложения */
   items: PropTypes.object,
-  /** Список комментариев пользователей */
-  reviewers: PropTypes.arrayOf(ReviewersType).isRequired,
+  /** Map - объект идентификаторов предложений на список комментариев */
+  commentsMap: PropTypes.object,
   /** Map - объект идентифыикаторо карточки на данные карточки предложения */
   neightbours: PropTypes.object,
+  /** Статус авторизации пользователя */
+  authStatus: PropTypes.bool.isRequired,
+  /** Обновить данные карточки предложения */
+  updateOfferCard: PropTypes.func.isRequired,
+  /** Получить список комментариев */
+  fetchCommentsList: PropTypes.func.isRequired,
+  /** Отправить данные формы комментариев на сервер */
+  onSubmit: PropTypes.func.isRequired,
 };
 
 export const OfferPageWrapped = withOfferPage(OfferPage);

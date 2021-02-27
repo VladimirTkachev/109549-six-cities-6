@@ -9,6 +9,7 @@ import {
   STORE_USER_DATA,
   APPEND_NOTIFICATION,
   REMOVE_NOTIFICATION,
+  STORE_COMMENTS,
 } from "./action-types";
 
 const selectCity = (city) => {
@@ -84,6 +85,14 @@ const removeNotification = (id) => {
   };
 };
 
+const storeComments = (comments, id) => {
+  return {
+    type: STORE_COMMENTS,
+    payload: comments,
+    meta: id,
+  };
+};
+
 export {
   selectCity,
   storeCities,
@@ -95,4 +104,5 @@ export {
   storeUserData,
   appendNotification,
   removeNotification,
+  storeComments,
 };

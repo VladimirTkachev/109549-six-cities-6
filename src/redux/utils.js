@@ -1,4 +1,4 @@
-export function toReducer(data = []) {
+export function toReducerOffersCards(data = []) {
   return data.reduce((acc, it) => {
     const cityName = it.city.name;
     acc.cities = [
@@ -50,5 +50,18 @@ export function toReducer(data = []) {
     cities: [],
     offersIdsMap: {},
     offerCardsMap: {},
+  });
+}
+
+export function toReducerComments(data = []) {
+  return data.map((it) => {
+    return {
+      ...it,
+      user: {
+        ...it.user,
+        avatarUrl: it.user[`avatar_url`],
+        isPro: it.user[`is_pro`],
+      },
+    };
   });
 }

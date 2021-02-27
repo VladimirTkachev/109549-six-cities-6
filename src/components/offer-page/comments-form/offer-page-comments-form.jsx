@@ -1,8 +1,9 @@
 import React, {useState, useCallback} from "react";
+import PropTypes from "prop-types";
 
 const RATING_LIST = Array.from({length: 5}).fill(1);
 
-const CommentForm = () => {
+const CommentForm = ({id: offerId, onSubmit}) => {
   const [selectedStart, setSelectedStar] = useState(null);
   const [commentText, setCommentText] = useState(``);
   const handleSelectedStarsChange = useCallback((evt) => {
@@ -12,10 +13,21 @@ const CommentForm = () => {
     setCommentText(evt.target.value);
   }, []);
 
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+
+    onSubmit(offerId, commentText, selectedStart)
+      .then(() => {
+        setSelectedStar(null);
+        setCommentText(``);
+      });
+  };
+
   return (
     <form className="reviews__form form"
       action="#"
-      method="post">
+      method="post"
+      onSubmit={handleSubmit}>
       <label className="reviews__label form__label"
         htmlFor="review">
         Your review
@@ -66,6 +78,13 @@ const CommentForm = () => {
       </div>
     </form>
   );
+};
+
+CommentForm.propTypes = {
+  /** Идентификатор картоски предложения */
+  id: PropTypes.number.isRequired,
+  /** Отправить данные формы комментариев на сервер */
+  onSubmit: PropTypes.func.isRequired,
 };
 
 export default CommentForm;

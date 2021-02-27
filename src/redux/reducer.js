@@ -11,6 +11,7 @@ import {
   STORE_USER_DATA,
   APPEND_NOTIFICATION,
   REMOVE_NOTIFICATION,
+  STORE_COMMENTS,
 } from "./action-types";
 
 const initialState = {
@@ -47,12 +48,22 @@ const initialState = {
     /** Имя пользователя */
     name: ``,
   },
+  /** Map - объект идентификаторов предложений на список комментариев */
+  commentsMap: {},
   /** Список уведомлений */
   notifications: [],
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case STORE_COMMENTS:
+      return {
+        ...state,
+        commentsMap: {
+          ...state.commentsMap,
+          [action.meta]: action.payload,
+        },
+      };
     case APPEND_NOTIFICATION:
       return {
         ...state,
