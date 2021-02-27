@@ -6,6 +6,10 @@ import {
   STORE_OFFERS,
   CHANGE_SORT,
   STORE_HOTEL_DATA,
+  CHANGE_AUTH_STATUS,
+  STORE_USER_DATA,
+  APPEND_NOTIFICATION,
+  REMOVE_NOTIFICATION,
 } from "./action-types";
 
 const initialState = {
@@ -27,10 +31,50 @@ const initialState = {
   selectedCity: {},
   /** Список городов */
   cities: CitiesList,
+  /** Статус авторизации пользователя */
+  authorizationStatus: false,
+  /** Данные зарегестрированного пользователя */
+  user: {
+    /** Путь до аватарки */
+    avatarUrl: ``,
+    /** email */
+    email: ``,
+    /** Идентификатор */
+    id: null,
+    /** Статус пользователя */
+    isPro: null,
+    /** Имя пользователя */
+    name: ``,
+  },
+  /** Список уведомлений */
+  notifications: [],
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case APPEND_NOTIFICATION:
+      return {
+        ...state,
+        notifications: [
+          ...state.notifications,
+          action.payload,
+        ],
+      };
+    case REMOVE_NOTIFICATION:
+      return {
+        ...state,
+        notifications: state.notifications.filter((it) => it.id !== action.meta),
+      };
+    case CHANGE_AUTH_STATUS:
+      return {
+        ...state,
+        authorizationStatus: action.payload,
+      };
+    case STORE_USER_DATA:
+      return {
+        ...state,
+        user: action.payload,
+      };
     case STORE_HOTEL_DATA:
       return {
         ...state,

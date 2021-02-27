@@ -90,6 +90,18 @@ function getSort(state) {
   return state.sort;
 }
 
+function getAuthStatus(state) {
+  return state.authorizationStatus;
+}
+
+function getUserData(state, fieldName) {
+  return fieldName ? state.user[fieldName] : state.user;
+}
+
+function getNotifications(state) {
+  return state.notifications;
+}
+
 export {
   SortTypes,
   getSelectedCity,
@@ -101,4 +113,7 @@ export {
   getOffersCount,
   getNeightboursIdsMap,
   getSort,
+  getAuthStatus,
+  getUserData,
+  getNotifications,
 };

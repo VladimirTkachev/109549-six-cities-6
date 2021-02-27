@@ -11,7 +11,7 @@ import Spinner from "Project/components/spinner/Spinner";
 import withMainPage from "./hocs/with-main-page.js";
 
 const MainPage = (props) => {
-  const {username, selectedSort, offersIds, fetchOffersList} = props;
+  const {authStatus, email, selectedSort, offersIds, fetchOffersList} = props;
   const [activeItem, setActiveItem] = useState(null);
   const [fetching, setFetching] = useState(false);
   const handleMouseEnter = useCallback((item) => {
@@ -74,10 +74,10 @@ const MainPage = (props) => {
                 <ul className="header__nav-list">
                   <li className="header__nav-item user">
                     <Link className="header__nav-link header__nav-link--profile"
-                      to="">
+                      to={authStatus ? `` : `/login`}>
                       <div className="header__avatar-wrapper user__avatar-wrapper"/>
                       <span className="header__user-name user__name">
-                        {username}
+                        {authStatus ? email : `Sign in`}
                       </span>
                     </Link>
                   </li>
@@ -153,14 +153,16 @@ const LabelValueType = PropTypes.shape({
 });
 
 MainPage.propTypes = {
-  /** Имя пользователя */
-  username: PropTypes.string.isRequired,
+  /** email пользователя */
+  email: PropTypes.string.isRequired,
   /** Данные выбранной сортировки */
   selectedSort: LabelValueType.isRequired,
   /** Список идентификаторов карточек предложений */
   offersIds: PropTypes.arrayOf(PropTypes.number),
   /** Получить список предложение */
   fetchOffersList: PropTypes.func,
+  /** Статус авторизации пользователя */
+  authStatus: PropTypes.bool.isRequired,
 };
 
 export const MainPageWrapped = withMainPage(MainPage);
