@@ -26,7 +26,8 @@ function login({login: email, password}) {
           avatarUrl: data[`avatar_url`],
           isPro: data[`is_pro`],
         }));
-      });
+      })
+      .catch(() => {});
   };
 }
 

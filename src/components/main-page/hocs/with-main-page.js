@@ -4,7 +4,7 @@ import {
   getOffersIds,
   getSort,
   getAuthStatus,
-  getEmail,
+  getUserData,
 } from "Project/redux/selectors";
 import {fetchOffersList} from "Project/redux/thunks";
 
@@ -13,7 +13,7 @@ function mapStateToProps(state) {
     offersIds: getOffersIds(state),
     selectedSort: getSort(state),
     authStatus: getAuthStatus(state),
-    email: getEmail(state),
+    email: getUserData(state, `email`),
   };
 }
 

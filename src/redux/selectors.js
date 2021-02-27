@@ -94,16 +94,8 @@ function getAuthStatus(state) {
   return state.authorizationStatus;
 }
 
-function getUserData(state) {
-  return state.user;
-}
-
-function getUsername(state) {
-  return getUserData(state).name;
-}
-
-function getEmail(state) {
-  return getUserData(state).email;
+function getUserData(state, name) {
+  return name ? state.user[name] : state.user;
 }
 
 export {
@@ -119,6 +111,4 @@ export {
   getSort,
   getAuthStatus,
   getUserData,
-  getUsername,
-  getEmail,
 };
