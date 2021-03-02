@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import {
   getCities,
   getSelectedCity,
-} from "Project/redux/selectors";
+} from "Project/redux/cities";
 import {selectCity} from "Project/redux/actions";
 
 function mapStateToProps(state) {

@@ -8,9 +8,11 @@ import {
 } from "react-redux";
 
 import {OfferCardTypes} from "Project/prop-types/offer-card";
-import {getUserData} from "Project/redux/selectors";
-// TODO: Нужна для тестов, удалить когда будет сдача проекта
-// import {logout} from "Project/redux/thunks";
+import {
+  getUserData,
+  // TODO: Нужна для тестов, удалить когда будет сдача проекта
+  // logout,
+} from "Project/redux/auth";
 
 import FavoriteCard from "./favorite-card/favorites-page-favorite-card";
 

@@ -3,15 +3,17 @@ import {connect} from "react-redux";
 import {
   getNeightboursIdsMap,
   getOfferCardsMap,
+  updateOfferCard,
+} from "Project/redux/offers";
+import {
   getUserData,
   getAuthStatus,
-  getCommentsMap,
-} from "Project/redux/selectors";
+} from "Project/redux/auth";
 import {
-  updateOfferCard,
+  getCommentsMap,
   fetchCommentsList,
   appendUserComment,
-} from "Project/redux/thunks";
+} from "Project/redux/comments";
 
 function mapStateToProps(state) {
   return {

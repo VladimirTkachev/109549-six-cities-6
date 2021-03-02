@@ -1,5 +1,9 @@
 import {createSelector} from "reselect";
 
+import {getSelectedCity} from "../cities";
+
+const OFFERS_STORE_KEY = `offers`;
+
 const SortTypes = [
   // Оставляем в том порядке в котором данные пришли с сервера
   {
@@ -51,24 +55,16 @@ function sorting(sort, itemsIds, items) {
   }
 }
 
-function getSelectedCity(state) {
-  return state.selectedCity;
-}
-
-function getCities(state) {
-  return state.cities;
-}
-
-function getOffers(state) {
-  return state.offers;
+function getOffersState(state) {
+  return state[OFFERS_STORE_KEY] || {};
 }
 
 function getOffersIdsMap(state) {
-  return getOffers(state).offersIdsMap;
+  return getOffersState(state).offersIdsMap;
 }
 
 function getOfferCardsMap(state) {
-  return getOffers(state).offerCardsMap;
+  return getOffersState(state).offerCardsMap;
 }
 
 const getOffersIds = createSelector([
@@ -87,42 +83,21 @@ function getOffersCount(state) {
 }
 
 function getNeightboursIdsMap(state) {
-  return getOffers(state).neightboursIdsMap;
+  return getOffersState(state).neightboursIdsMap;
 }
 
 function getSort(state) {
-  return state.sort;
-}
-
-function getAuthStatus(state) {
-  return state.authorizationStatus;
-}
-
-function getUserData(state, fieldName) {
-  return fieldName ? state.user[fieldName] : state.user;
-}
-
-function getNotifications(state) {
-  return state.notifications;
-}
-
-function getCommentsMap(state) {
-  return state.commentsMap;
+  return getOffersState(state).sort;
 }
 
 export {
+  OFFERS_STORE_KEY,
   SortTypes,
-  getSelectedCity,
-  getCities,
-  getOffers,
+  getOffersState,
   getOffersIdsMap,
   getOfferCardsMap,
   getOffersIds,
   getOffersCount,
   getNeightboursIdsMap,
   getSort,
-  getAuthStatus,
-  getUserData,
-  getNotifications,
-  getCommentsMap,
 };

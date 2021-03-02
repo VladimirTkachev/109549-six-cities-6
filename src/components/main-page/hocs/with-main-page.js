@@ -3,10 +3,12 @@ import {connect} from "react-redux";
 import {
   getOffersIds,
   getSort,
+  fetchOffersList,
+} from "Project/redux/offers";
+import {
   getAuthStatus,
   getUserData,
-} from "Project/redux/selectors";
-import {fetchOffersList} from "Project/redux/thunks";
+} from "Project/redux/auth";
 
 function mapStateToProps(state) {
   return {

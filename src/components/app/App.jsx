@@ -26,7 +26,7 @@ const App = (props) => {
           </Route>
           <PrivateRouteWrapped exact
             path="/favorites"
-            render={(_params) => {
+            render={() => {
               return (
                 <FavoritesPage
                   items={favoritesList}/>

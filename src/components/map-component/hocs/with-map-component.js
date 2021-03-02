@@ -2,7 +2,7 @@ import {connect} from "react-redux";
 
 import {
   getOfferCardsMap,
-} from "Project/redux/selectors";
+} from "Project/redux/offers";
 
 function mapStateToProps(state) {
   return {
