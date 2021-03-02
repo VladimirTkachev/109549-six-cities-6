@@ -10,6 +10,7 @@ import {Username, FavoritesList} from "./mocks/offer";
 import reducer from "./redux/reducer";
 import {changeAuthStatus} from "./redux/actions";
 import {checkAuth} from "./redux/thunks";
+import {redirect} from "./redux/middleware";
 import {createAPI} from "./api";
 
 const api = createAPI(
@@ -17,6 +18,7 @@ const api = createAPI(
 );
 const store = createStore(reducer, composeWithDevTools(
     applyMiddleware(thunk.withExtraArgument(api)),
+    applyMiddleware(redirect),
 ));
 
 store.dispatch(checkAuth());

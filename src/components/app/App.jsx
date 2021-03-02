@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
+import {Router, Switch, Route} from "react-router-dom";
 
 import {OfferCardTypes} from "Project/prop-types/offer-card";
 import {MainPageWrapped} from "Project/components/main-page/MainPage";
@@ -8,13 +8,15 @@ import {SignInPageWrapped} from "Project/components/sign-in-page/SignInPage";
 import FavoritesPage from "Project/components/favorites-page/FavoritePage";
 import {OfferPageWrapped} from "Project/components/offer-page/OfferPage";
 import NotFoundPage from "Project/components/not-found-page/NotFoundPage";
+import {PrivateRouteWrapped} from "Project/components/private-route/PrivateRoute";
+import browserHistory from "Project/browser-history";
 
 const App = (props) => {
   const {username, favoritesList} = props;
 
   return (
     <>
-      <Router>
+      <Router history={browserHistory}>
         <Switch>
           <Route path="/" exact>
             <MainPageWrapped/>
@@ -22,10 +24,15 @@ const App = (props) => {
           <Route path="/login" exact>
             <SignInPageWrapped/>
           </Route>
-          <Route path="/favorites" exact>
-            <FavoritesPage username={username}
-              items={favoritesList}/>
-          </Route>
+          <PrivateRouteWrapped exact
+            path="/favorites"
+            render={(_params) => {
+              return (
+                <FavoritesPage
+                  username={username}
+                  items={favoritesList}/>
+              );
+            }}/>
           <Route path="/offer/:id" exact>
             <OfferPageWrapped/>
           </Route>

@@ -10,6 +10,7 @@ import {
   APPEND_NOTIFICATION,
   REMOVE_NOTIFICATION,
   STORE_COMMENTS,
+  REDIRECT_TO_ROUTE,
 } from "./action-types";
 
 const selectCity = (city) => {
@@ -93,6 +94,13 @@ const storeComments = (comments, id) => {
   };
 };
 
+const redirectToRoute = (url) => {
+  return {
+    type: REDIRECT_TO_ROUTE,
+    payload: url,
+  };
+};
+
 export {
   selectCity,
   storeCities,
@@ -105,4 +113,5 @@ export {
   appendNotification,
   removeNotification,
   storeComments,
+  redirectToRoute,
 };

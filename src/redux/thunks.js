@@ -11,6 +11,7 @@ import {
   appendNotification,
   updateOffer,
   storeComments,
+  redirectToRoute,
 } from "./actions";
 import {
   getOfferCardsMap,
@@ -73,6 +74,7 @@ function login({login: email, password}) {
           isPro: data[`is_pro`],
         }));
       })
+      .then(() => dispatch(redirectToRoute(`/`)))
       .catch((error) => {
         dispatch(appendNotification({
           message: error.message,
