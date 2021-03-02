@@ -1,5 +1,5 @@
 import browserHistory from "Project/browser-history";
-import {REDIRECT_TO_ROUTE} from "Project/redux/action-types";
+import {REDIRECT_TO_ROUTE} from "Project/redux/auth";
 
 const redirect = (_state) => {
   return (dispatch) => {
