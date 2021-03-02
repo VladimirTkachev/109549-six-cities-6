@@ -85,6 +85,14 @@ function login({login: email, password}) {
   };
 }
 
+function logout() {
+  return (dispatch, _getState, api) => {
+    return api.get(`/logout`)
+      .then(() => dispatch(changeAuthStatus(false)))
+      .then(() => dispatch(redirectToRoute(`/login`)));
+  };
+}
+
 function checkAuth() {
   return (dispatch, _getState, api) => {
     return api.get(`/login`)
@@ -147,6 +155,7 @@ export {
   fetchOffersList,
   updateOfferCard,
   login,
+  logout,
   checkAuth,
   fetchCommentsList,
   appendUserComment,

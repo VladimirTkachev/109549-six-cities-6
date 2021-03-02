@@ -12,7 +12,7 @@ import {PrivateRouteWrapped} from "Project/components/private-route/PrivateRoute
 import browserHistory from "Project/browser-history";
 
 const App = (props) => {
-  const {username, favoritesList} = props;
+  const {favoritesList} = props;
 
   return (
     <>
@@ -29,7 +29,6 @@ const App = (props) => {
             render={(_params) => {
               return (
                 <FavoritesPage
-                  username={username}
                   items={favoritesList}/>
               );
             }}/>
@@ -46,8 +45,6 @@ const App = (props) => {
 };
 
 App.propTypes = {
-  /** Имя пользователя */
-  username: PropTypes.string.isRequired,
   /** Список выбранных городов */
   favoritesList: PropTypes.arrayOf(
       PropTypes.shape({
