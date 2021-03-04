@@ -1,13 +1,26 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
+import {
+  useSelector,
+  // TODO: Нужна для тестов, удалить когда будет сдача проекта
+  // useDispatch,
+} from "react-redux";
 
 import {OfferCardTypes} from "Project/prop-types/offer-card";
+import {
+  selectors,
+  // TODO: Нужна для тестов, удалить когда будет сдача проекта
+  // thunks,
+} from "Project/redux/auth";
 
 import FavoriteCard from "./favorite-card/favorites-page-favorite-card";
 
 const FavoritesPage = (props) => {
-  const {username, items} = props;
+  const {items} = props;
+  const email = useSelector((state) => selectors.getUserData(state, `email`));
+  // TODO: Нужна для тестов, удалить когда будет сдача проекта
+  // const dispatch = useDispatch();
 
   return (
     <>
@@ -47,13 +60,20 @@ const FavoritesPage = (props) => {
               </div>
               <nav className="header__nav">
                 <ul className="header__nav-list">
+                  {/** TODO: Нужна для тестов, удалить когда будет сдача проекта */}
+                  {/* <li className="header__nav-item user">
+                    <button type="button"
+                      onClick={() => dispatch(thunks.logout())}>
+                        logout
+                    </button>
+                  </li> */}
                   <li className="header__nav-item user">
                     <Link className="header__nav-link header__nav-link--profile"
                       to="/">
                       <div className="header__avatar-wrapper user__avatar-wrapper">
                       </div>
                       <span className="header__user-name user__name">
-                        {username}
+                        {email}
                       </span>
                     </Link>
                   </li>
@@ -111,8 +131,6 @@ const FavoritesPage = (props) => {
 };
 
 FavoritesPage.propTypes = {
-  /** Ися пользователя */
-  username: PropTypes.string.isRequired,
   /** Список выбранных городов */
   items: PropTypes.arrayOf(
       PropTypes.shape({

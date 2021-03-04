@@ -1,13 +1,12 @@
 import React, {useRef} from "react";
 import PropTypes from "prop-types";
-import {Link, useHistory} from "react-router-dom";
+import {Link} from "react-router-dom";
 
 import withSignInPage from "./hocs/with-sign-in-page";
 
 const SignInPage = ({onLogin}) => {
   const loginRef = useRef(null);
   const passwordRef = useRef(null);
-  const history = useHistory();
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
@@ -15,8 +14,7 @@ const SignInPage = ({onLogin}) => {
     onLogin({
       login: loginRef.current.value,
       password: passwordRef.current.value,
-    })
-    .then(() => history.push(`/`));
+    });
   };
 
   return (

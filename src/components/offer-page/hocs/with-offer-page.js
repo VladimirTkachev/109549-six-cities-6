@@ -1,32 +1,31 @@
 import {connect} from "react-redux";
 
 import {
-  getNeightboursIdsMap,
-  getOfferCardsMap,
-  getUserData,
-  getAuthStatus,
-  getCommentsMap,
-} from "Project/redux/selectors";
+  selectors as offersSelectors,
+  thunks as offersThunks,
+} from "Project/redux/offers";
 import {
-  updateOfferCard,
-  fetchCommentsList,
-  appendUserComment,
-} from "Project/redux/thunks";
+  selectors as authSelectors,
+} from "Project/redux/auth";
+import {
+  selectors as commentSelectors,
+  thunks as commentThunks,
+} from "Project/redux/comments";
 
 function mapStateToProps(state) {
   return {
-    neightbours: getNeightboursIdsMap(state),
-    items: getOfferCardsMap(state),
-    email: getUserData(state, `email`),
-    authStatus: getAuthStatus(state),
-    commentsMap: getCommentsMap(state),
+    neightbours: offersSelectors.getNeightboursIdsMap(state),
+    items: offersSelectors.getOfferCardsMap(state),
+    email: authSelectors.getUserData(state, `email`),
+    authStatus: authSelectors.getAuthStatus(state),
+    commentsMap: commentSelectors.getCommentsMap(state),
   };
 }
 
 const mapDispatchToProps = {
-  updateOfferCard,
-  fetchCommentsList,
-  onSubmit: appendUserComment,
+  updateOfferCard: offersThunks.updateOfferCard,
+  fetchCommentsList: commentThunks.fetchCommentsList,
+  onSubmit: commentThunks.appendUserComment,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps);

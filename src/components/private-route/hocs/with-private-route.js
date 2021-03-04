@@ -1,10 +1,10 @@
 import {connect} from "react-redux";
 
-import {getAuthStatus} from "Project/redux/selectors";
+import {selectors} from "Project/redux/auth";
 
 function mapStateToProps(state) {
   return {
-    authStatus: getAuthStatus(state),
+    authStatus: selectors.getAuthStatus(state),
   };
 }
 
