@@ -1,6 +1,6 @@
 import {v4 as uuid} from "uuid";
 
-import {appendNotification} from "../notifications";
+import {actions} from "../notifications";
 import {
   changeAuthStatus,
   storeUserData,
@@ -20,7 +20,7 @@ function login({login: email, password}) {
       })
       .then(() => dispatch(redirectToRoute(`/`)))
       .catch((error) => {
-        dispatch(appendNotification({
+        dispatch(actions.appendNotification({
           message: error.message,
           type: `error`,
           id: uuid(),
@@ -42,7 +42,7 @@ function checkAuth() {
     return api.get(`/login`)
       .then(() => dispatch(changeAuthStatus(true)))
       .catch((error) => {
-        dispatch(appendNotification({
+        dispatch(actions.appendNotification({
           message: error.message,
           type: `error`,
           id: uuid(),

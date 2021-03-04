@@ -1,9 +1,9 @@
 import {connect} from "react-redux";
 
-import {login} from "Project/redux/auth";
+import {thunks} from "Project/redux/auth";
 
 const mapDispatchToProps = {
-  onLogin: login,
+  onLogin: thunks.login,
 };
 
 export default connect(null, mapDispatchToProps);

@@ -1,6 +1,6 @@
 import {createSelector} from "reselect";
 
-import {getSelectedCity} from "../cities";
+import {selectors} from "../cities";
 
 const OFFERS_STORE_KEY = `offers`;
 
@@ -68,7 +68,7 @@ function getOfferCardsMap(state) {
 }
 
 const getOffersIds = createSelector([
-  getSelectedCity,
+  selectors.getSelectedCity,
   getSort,
   getOffersIdsMap,
   getOfferCardsMap

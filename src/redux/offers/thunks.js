@@ -1,6 +1,6 @@
 import {v4 as uuid} from "uuid";
 
-import {appendNotification} from "../notifications";
+import {actions} from "../notifications";
 import {toReducerOffersCards} from "./utils";
 import {
   storeHotelData,
@@ -46,7 +46,7 @@ function updateOfferCard(id) {
       }, id));
     })
     .catch((error) => {
-      dispatch(appendNotification({
+      dispatch(actions.appendNotification({
         message: error.message,
         type: `error`,
         id: uuid(),

@@ -1,4 +1,4 @@
-import {STORE_HOTEL_DATA} from "../offers";
+import {actionTypes} from "../offers";
 import {SELECT_CITY} from "./action-types";
 
 const initialState = {
@@ -15,7 +15,7 @@ export default (state = initialState, action) => {
         ...state,
         selectedCity: action.payload,
       };
-    case STORE_HOTEL_DATA:
+    case actionTypes.STORE_HOTEL_DATA:
       return {
         ...state,
         cities: action.payload.cities,

@@ -1,26 +1,24 @@
 import {connect} from "react-redux";
 
 import {
-  getOffersIds,
-  getSort,
-  fetchOffersList,
+  selectors as offerSelectors,
+  thunks,
 } from "Project/redux/offers";
 import {
-  getAuthStatus,
-  getUserData,
+  selectors as authSelectors,
 } from "Project/redux/auth";
 
 function mapStateToProps(state) {
   return {
-    offersIds: getOffersIds(state),
-    selectedSort: getSort(state),
-    authStatus: getAuthStatus(state),
-    email: getUserData(state, `email`),
+    offersIds: offerSelectors.getOffersIds(state),
+    selectedSort: offerSelectors.getSort(state),
+    authStatus: authSelectors.getAuthStatus(state),
+    email: authSelectors.getUserData(state, `email`),
   };
 }
 
 const mapDispatchToProps = {
-  fetchOffersList,
+  fetchOffersList: thunks.fetchOffersList,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps);

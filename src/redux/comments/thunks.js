@@ -1,6 +1,6 @@
 import {v4 as uuid} from "uuid";
 
-import {appendNotification} from "../notifications";
+import {actions} from "../notifications";
 import {storeComments} from "./actions";
 import {toReducerComments} from "./utils";
 import {getCommentsMap} from "./selectors";
@@ -22,7 +22,7 @@ function fetchCommentsList(id) {
         dispatch(storeComments(comments, id));
       })
       .catch((error) => {
-        dispatch(appendNotification({
+        dispatch(actions.appendNotification({
           message: error.message,
           type: `error`,
           id: uuid(),
@@ -40,7 +40,7 @@ function appendUserComment(id, comment, rating) {
         dispatch(storeComments(comments, id));
       })
       .catch((error) => {
-        dispatch(appendNotification({
+        dispatch(actions.appendNotification({
           message: error.message,
           type: `error`,
           id: uuid(),

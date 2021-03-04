@@ -1,4 +1,10 @@
-export * from "./action-types";
-export * from "./actions";
-export * from "./selectors";
+import * as actionTypes from "./action-types";
+import * as actions from "./actions";
+import * as selectors from "./selectors";
+
+export {
+  actionTypes,
+  actions,
+  selectors,
+};
 export {default} from './reducer';

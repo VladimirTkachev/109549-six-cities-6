@@ -9,16 +9,16 @@ import {
 
 import {OfferCardTypes} from "Project/prop-types/offer-card";
 import {
-  getUserData,
+  selectors,
   // TODO: Нужна для тестов, удалить когда будет сдача проекта
-  // logout,
+  // thunks,
 } from "Project/redux/auth";
 
 import FavoriteCard from "./favorite-card/favorites-page-favorite-card";
 
 const FavoritesPage = (props) => {
   const {items} = props;
-  const email = useSelector((state) => getUserData(state, `email`));
+  const email = useSelector((state) => selectors.getUserData(state, `email`));
   // TODO: Нужна для тестов, удалить когда будет сдача проекта
   // const dispatch = useDispatch();
 
@@ -63,7 +63,7 @@ const FavoritesPage = (props) => {
                   {/** TODO: Нужна для тестов, удалить когда будет сдача проекта */}
                   {/* <li className="header__nav-item user">
                     <button type="button"
-                      onClick={() => dispatch(logout())}>
+                      onClick={() => dispatch(thunks.logout())}>
                         logout
                     </button>
                   </li> */}

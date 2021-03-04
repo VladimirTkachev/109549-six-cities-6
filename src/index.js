@@ -7,15 +7,15 @@ import thunk from "redux-thunk";
 
 import App from "./components/app/App";
 import {FavoritesList} from "./mocks/offer";
-import {changeAuthStatus, checkAuth, redirectToRoute} from "./redux/auth";
+import {actions, thunks} from "./redux/auth";
 import {redirect} from "./redux/middleware";
 import {createAPI} from "./api";
 import reducer from "./redux";
 
 const api = createAPI(
     () => {
-      store.dispatch(changeAuthStatus(false));
-      store.dispatch(redirectToRoute(`/login`));
+      store.dispatch(actions.changeAuthStatus(false));
+      store.dispatch(actions.redirectToRoute(`/login`));
     },
 );
 const store = createStore(reducer, composeWithDevTools(
@@ -23,7 +23,7 @@ const store = createStore(reducer, composeWithDevTools(
     applyMiddleware(redirect),
 ));
 
-store.dispatch(checkAuth());
+store.dispatch(thunks.checkAuth());
 
 ReactDom.render(
     <Provider store={store}>

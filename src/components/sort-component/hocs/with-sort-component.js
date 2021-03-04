@@ -1,16 +1,15 @@
 import {connect} from "react-redux";
 
 import {
-  getSort,
-  SortTypes,
-  changeSort,
+  selectors,
+  actions,
 } from "Project/redux/offers";
 
 function mapStateToProps(state) {
   return {
-    items: SortTypes,
-    selectedItem: getSort(state),
+    items: selectors.SortTypes,
+    selectedItem: selectors.getSort(state),
   };
 }
 
-export default connect(mapStateToProps, {onChange: changeSort});
+export default connect(mapStateToProps, {onChange: actions.changeSort});
