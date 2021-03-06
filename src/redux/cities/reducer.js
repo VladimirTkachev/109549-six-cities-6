@@ -6,6 +6,8 @@ const initialState = {
   cities: [],
   /** Данные выбранного города */
   selectedCity: {},
+  /** Список городов у которых карточки предложений добавленны в избранное */
+  favoriteCities: [],
 };
 
 export default (state = initialState, action) => {
@@ -14,6 +16,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         selectedCity: action.payload,
+      };
+    case actionTypes.STORE_FAVORITE_DATA:
+      return {
+        ...state,
+        favoriteCities: action.payload.cities,
       };
     case actionTypes.STORE_HOTEL_DATA:
       return {

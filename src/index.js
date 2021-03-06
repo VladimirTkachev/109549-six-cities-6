@@ -6,7 +6,6 @@ import {composeWithDevTools} from "redux-devtools-extension";
 import thunk from "redux-thunk";
 
 import App from "./components/app/App";
-import {FavoritesList} from "./mocks/offer";
 import {actions, thunks} from "./redux/auth";
 import {redirect} from "./redux/middleware";
 import {createAPI} from "./api";
@@ -27,7 +26,7 @@ store.dispatch(thunks.checkAuth());
 
 ReactDom.render(
     <Provider store={store}>
-      <App favoritesList={FavoritesList}/>
+      <App/>
     </Provider>,
     document.getElementById(`root`),
 );

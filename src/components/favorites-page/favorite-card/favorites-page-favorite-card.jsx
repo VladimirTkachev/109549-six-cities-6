@@ -1,9 +1,10 @@
 import React from "react";
+import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
 
 import {OfferCardTypes} from "Project/prop-types/offer-card";
 
-const FavoriteCard = ({item}) => {
+const FavoriteCard = ({item, onFavoriteChange}) => {
   return (
     <article className="favorites__card place-card">
       <div className="favorites__image-wrapper place-card__image-wrapper">
@@ -26,7 +27,8 @@ const FavoriteCard = ({item}) => {
             </span>
           </div>
           <button className="place-card__bookmark-button place-card__bookmark-button--active button"
-            type="button">
+            type="button"
+            onClick={(_evt) => onFavoriteChange(item.id)}>
             <svg className="place-card__bookmark-icon"
               width="18"
               height="19">
@@ -58,9 +60,16 @@ const FavoriteCard = ({item}) => {
   );
 };
 
+FavoriteCard.defaultProps = {
+  item: {},
+  onFavoriteChange: () => {},
+};
+
 FavoriteCard.propTypes = {
   /** Данные кароточки предложения */
   item: OfferCardTypes.isRequired,
+  /** Обработчик измменения состояния "Избранное" */
+  onFavoriteChange: PropTypes.func.isRequired,
 };
 
 export default FavoriteCard;

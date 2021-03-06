@@ -12,9 +12,14 @@ function getCities(state) {
   return getCitiesState(state).cities;
 }
 
+function getFavoriteCities(state) {
+  return getCitiesState(state).favoriteCities;
+}
+
 export {
   CITIES_STORE_KEY,
   getCitiesState,
   getSelectedCity,
   getCities,
+  getFavoriteCities,
 };

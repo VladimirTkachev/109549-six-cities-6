@@ -90,6 +90,10 @@ function getSort(state) {
   return getOffersState(state).sort;
 }
 
+function getFavoritesOffersIdsMap(state) {
+  return getOffersState(state).favoritesOffersIdsMap;
+}
+
 export {
   OFFERS_STORE_KEY,
   SortTypes,
@@ -100,4 +104,5 @@ export {
   getOffersCount,
   getNeightboursIdsMap,
   getSort,
+  getFavoritesOffersIdsMap,
 };
