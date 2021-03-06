@@ -1,26 +1,25 @@
 import React from "react";
-import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
 import {
-  useSelector,
   // TODO: Нужна для тестов, удалить когда будет сдача проекта
-  // useDispatch,
+  useDispatch,
 } from "react-redux";
 
-import {OfferCardTypes} from "Project/prop-types/offer-card";
 import {
-  selectors,
   // TODO: Нужна для тестов, удалить когда будет сдача проекта
-  // thunks,
+  thunks,
 } from "Project/redux/auth";
 
 import FavoriteCard from "./favorite-card/favorites-page-favorite-card";
+import useFavoritePage from "./hooks/use-favorite-page";
+import Empty from "./favorite-page-empty/favorite-page-empty";
 
-const FavoritesPage = (props) => {
-  const {items} = props;
-  const email = useSelector((state) => selectors.getUserData(state, `email`));
+const FavoritesPage = () => {
   // TODO: Нужна для тестов, удалить когда будет сдача проекта
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
+  const {email, cities, offersCardsMap, offersIdsMap, handleFavoriteChange} = useFavoritePage();
+  const hasCities = Boolean(cities) && Boolean(cities.length);
+  const className = hasCities ? `page page--favorites` : `page page--favorites-empty`;
 
   return (
     <>
@@ -44,13 +43,13 @@ const FavoritesPage = (props) => {
           </symbol>
         </svg>
       </div>
-      <div className="page">
+      <div className={className}>
         <header className="header">
           <div className="container">
             <div className="header__wrapper">
               <div className="header__left">
                 <Link className="header__logo-link"
-                  to="#">
+                  to="/">
                   <img className="header__logo"
                     src="img/logo.svg"
                     alt="6 cities logo"
@@ -61,12 +60,12 @@ const FavoritesPage = (props) => {
               <nav className="header__nav">
                 <ul className="header__nav-list">
                   {/** TODO: Нужна для тестов, удалить когда будет сдача проекта */}
-                  {/* <li className="header__nav-item user">
+                  <li className="header__nav-item user">
                     <button type="button"
                       onClick={() => dispatch(thunks.logout())}>
                         logout
                     </button>
-                  </li> */}
+                  </li>
                   <li className="header__nav-item user">
                     <Link className="header__nav-link header__nav-link--profile"
                       to="/">
@@ -82,41 +81,48 @@ const FavoritesPage = (props) => {
             </div>
           </div>
         </header>
-        <main className="page__main page__main--favorites">
-          <div className="page__favorites-container container">
-            <section className="favorites">
-              <h1 className="favorites__title">
-                Saved listing
-              </h1>
-              <ul className="favorites__list">
-                {items.map((it) => {
-                  return (
-                    <li key={`${it.id}`}
-                      className="favorites__locations-items">
-                      <div className="favorites__locations locations locations--current">
-                        <div className="locations__item">
-                          <Link className="locations__item-link"
-                            to="#">
-                            <span>
-                              {it.city}
-                            </span>
-                          </Link>
+        {hasCities ? (
+
+          <main className="page__main page__main--favorites">
+            <div className="page__favorites-container container">
+              <section className="favorites">
+                <h1 className="favorites__title">
+                  Saved listing
+                </h1>
+                <ul className="favorites__list">
+                  {cities.map((it) => {
+                    return (
+                      <li key={`${it.id}`}
+                        className="favorites__locations-items">
+                        <div className="favorites__locations locations locations--current">
+                          <div className="locations__item">
+                            <Link className="locations__item-link"
+                              to="#">
+                              <span>
+                                {it.name}
+                              </span>
+                            </Link>
+                          </div>
                         </div>
-                      </div>
-                      <div className="favorites__places">
-                        {it.items.map((item) => {
-                          return (
-                            <FavoriteCard key={`${item.id}`} item={item}/>
-                          );
-                        })}
-                      </div>
-                    </li>
-                  );
-                })}
-              </ul>
-            </section>
-          </div>
-        </main>
+                        <div className="favorites__places">
+                          {offersIdsMap[it.id].map((id) => {
+                            return (
+                              <FavoriteCard key={`${id}`}
+                                item={offersCardsMap[id]}
+                                onFavoriteChange={handleFavoriteChange}/>
+                            );
+                          })}
+                        </div>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </section>
+            </div>
+          </main>
+        ) : (
+          <Empty/>
+        )}
         <footer className="footer container">
           <Link className="footer__logo-link" to="/">
             <img className="footer__logo"
@@ -128,20 +134,6 @@ const FavoritesPage = (props) => {
       </div>
     </>
   );
-};
-
-FavoritesPage.propTypes = {
-  /** Список выбранных городов */
-  items: PropTypes.arrayOf(
-      PropTypes.shape({
-        /** Город */
-        city: PropTypes.string.isRequired,
-        /** Идентификатор */
-        id: PropTypes.string.isRequired,
-        /** Список предложений */
-        items: PropTypes.arrayOf(OfferCardTypes).isRequired,
-      }),
-  ),
 };
 
 export default FavoritesPage;

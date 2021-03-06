@@ -14,6 +14,7 @@ function getUserData(state, fieldName) {
 
 export {
   AUTH_STORE_KEY,
+  getAuthStore,
   getAuthStatus,
   getUserData,
 };

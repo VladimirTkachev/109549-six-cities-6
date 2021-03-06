@@ -3,6 +3,7 @@ import {
   STORE_OFFERS,
   CHANGE_SORT,
   UPDATE_OFFER,
+  STORE_FAVORITE_DATA,
 } from "./action-types";
 
 const initialState = {
@@ -17,10 +18,24 @@ const initialState = {
   offerCardsMap: {},
   /** Map - объект идентификаторов карточек предложений на список идентификаторов карточек соседних предложений */
   neightboursIdsMap: {},
+  /** Map - объект идентификаторов городов к массиву идентификаторов избранных карточек предложений */
+  favoritesOffersIdsMap: {},
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case STORE_FAVORITE_DATA:
+      return {
+        ...state,
+        offerCardsMap: {
+          ...state.offerCardsMap,
+          ...action.payload.offerCardsMap,
+        },
+        favoritesOffersIdsMap: {
+          ...state.favoritesOffersIdsMap,
+          ...action.payload.favoritesOffersIdsMap,
+        },
+      };
     case STORE_HOTEL_DATA:
       return {
         ...state,

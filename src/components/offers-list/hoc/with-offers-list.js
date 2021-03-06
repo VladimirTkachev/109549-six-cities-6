@@ -1,11 +1,22 @@
 import {connect} from "react-redux";
 
-import {selectors} from "Project/redux/offers";
+import {
+  selectors as offersSelectors,
+  thunks,
+} from "Project/redux/offers";
+import {
+  selectors as authSelectors
+} from "Project/redux/auth";
 
 function mapStateToProps(state) {
   return {
-    items: selectors.getOfferCardsMap(state),
+    items: offersSelectors.getOfferCardsMap(state),
+    auth: authSelectors.getAuthStatus(state),
   };
 }
 
-export default connect(mapStateToProps);
+const mapDispatchToProps = {
+  changeFavoriteStatus: thunks.changeFavoriteStatus,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps);

@@ -7,7 +7,7 @@ import {OfferCardTypes} from "Project/prop-types/offer-card";
 const STAR_WIDTH = 20;
 
 const OfferCard = (props) => {
-  const {item, onMouseEnter, onMouseLeave} = props;
+  const {item, onFavoriteChange, onMouseEnter, onMouseLeave} = props;
   const {id, isPremium, previewImage, price, isFavorite, rating, title, type} = item;
   const activeBookmarkClass = isFavorite ? `place-card__bookmark-button--active` : ``;
 
@@ -42,7 +42,8 @@ const OfferCard = (props) => {
             </span>
           </div>
           <button className={`place-card__bookmark-button ${activeBookmarkClass} button`}
-            type="button">
+            type="button"
+            onClick={(_evt) => onFavoriteChange(id)}>
             <svg className="place-card__bookmark-icon"
               width="18"
               height="19">
@@ -78,13 +79,16 @@ const OfferCard = (props) => {
 
 OfferCard.defaultProps = {
   item: {},
-  onMouseEnter: () => undefined,
-  onMouseLeave: () => undefined,
+  onFavoriteChange: () => {},
+  onMouseEnter: () => {},
+  onMouseLeave: () => {},
 };
 
 OfferCard.propTypes = {
   /** Данные карточки */
   item: OfferCardTypes.isRequired,
+  /** Обработчик измменения состояния "Избранное" */
+  onFavoriteChange: PropTypes.func.isRequired,
   /** Обработчик мыши при наведении наэлемент */
   onMouseEnter: PropTypes.func.isRequired,
   /** Обработчик мыши при уходе с элемента */
