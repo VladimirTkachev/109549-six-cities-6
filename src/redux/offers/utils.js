@@ -1,6 +1,33 @@
 export function toReducerOffersCards(data = []) {
   return data.reduce((acc, it) => {
     const cityName = it.city.name;
+    const isFavorite = it[`is_favorite`];
+
+    const getFavoriteValue = () => {
+      if (!isFavorite) {
+        return {};
+      }
+
+      if (isFavorite) {
+        if (acc.favoritesOffersIdsMap[cityName]) {
+          return {
+            ...acc.favoritesOffersIdsMap,
+            [cityName]: [
+              ...acc.favoritesOffersIdsMap[cityName],
+              it.id,
+            ]
+          };
+        }
+
+        return {
+          ...acc.favoritesOffersIdsMap,
+          [cityName]: [it.id],
+        };
+      }
+
+      return acc.favoritesOffersIdsMap[cityName];
+    };
+
     acc.cities = [
       ...acc.cities,
       {
@@ -21,6 +48,20 @@ export function toReducerOffersCards(data = []) {
           name: cityName,
         },
       ]),
+      favoriteCities: isFavorite
+        ? [
+          ...acc.favoriteCities,
+          {
+            id: cityName,
+            name: cityName,
+          },
+        ].reduce((items, item) => {
+          items = items.find((city) => city.id === item.id)
+            ? items
+            : [...items, item];
+
+          return items;
+        }, []) : acc.favoriteCities,
       offersIdsMap: {
         ...acc.offersIdsMap,
         [cityName]: acc.offersIdsMap[cityName] ? [
@@ -28,6 +69,7 @@ export function toReducerOffersCards(data = []) {
           it.id,
         ] : [it.id],
       },
+      favoritesOffersIdsMap: {...getFavoriteValue()},
       offerCardsMap: {
         ...acc.offerCardsMap,
         [it.id]: {
@@ -48,7 +90,9 @@ export function toReducerOffersCards(data = []) {
     return acc;
   }, {
     cities: [],
+    favoriteCities: [],
     offersIdsMap: {},
+    favoritesOffersIdsMap: {},
     offerCardsMap: {},
   });
 }

@@ -1,10 +1,13 @@
 import {v4 as uuid} from "uuid";
 
 import {actions} from "../notifications";
-import {toReducerOffersCards} from "./utils";
+import {
+  toReducerOffersCards,
+} from "./utils";
 import {
   storeHotelData,
   updateOffer,
+  storeFavoriteData,
 } from "./actions";
 import {
   getOfferCardsMap,
@@ -55,7 +58,42 @@ function updateOfferCard(id) {
   };
 }
 
+function changeFavoriteStatus(id) {
+  return (dispatch, getState, api) => {
+    const state = getState();
+    const items = getOfferCardsMap(state);
+    const item = items[id] || {};
+    const status = item.isFavorite ? 0 : 1;
+
+    return api.post(`favorite/${id}/${status}`).then(({data}) => {
+      dispatch(updateOffer({
+        ...item,
+        isFavorite: data[`is_favorite`],
+      }, id));
+    })
+    .catch((error) => {
+      dispatch(actions.appendNotification({
+        message: error.message,
+        type: `error`,
+        id: uuid(),
+      }));
+    });
+  };
+}
+
+function fetchFavorites() {
+  return (dispatch, _getState, api) => {
+    return api.get(`/favorite`).then(({data}) => {
+      const {favoriteCities: cities, favoritesOffersIdsMap, offerCardsMap} = toReducerOffersCards(data);
+
+      dispatch(storeFavoriteData({cities, favoritesOffersIdsMap, offerCardsMap}));
+    });
+  };
+}
+
 export {
   fetchOffersList,
   updateOfferCard,
+  changeFavoriteStatus,
+  fetchFavorites,
 };
