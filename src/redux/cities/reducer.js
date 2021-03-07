@@ -1,7 +1,7 @@
 import {actionTypes} from "../offers";
 import {SELECT_CITY} from "./action-types";
 
-const initialState = {
+export const initialState = {
   /** Список гороов */
   cities: [],
   /** Данные выбранного города */

@@ -72,7 +72,7 @@ const CommentForm = ({id: offerId, onSubmit}) => {
         </p>
         <button className="reviews__submit form__submit button"
           type="submit"
-          disabled="">
+          disabled={!selectedStart}>
             Submit
         </button>
       </div>

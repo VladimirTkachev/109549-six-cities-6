@@ -3,7 +3,7 @@ import {
   STORE_USER_DATA,
 } from "./action-types";
 
-const initialState = {
+export const initialState = {
   /** Статус авторизации пользователя */
   auth: false,
   /** Данные зарегестрированного пользователя */
