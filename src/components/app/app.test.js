@@ -4,10 +4,12 @@ import {Router} from "react-router-dom";
 import {createMemoryHistory} from "history";
 import {render, screen} from "@testing-library/react";
 import configureStore from "redux-mock-store";
+import thunk from "redux-thunk";
 
 import App from "./App";
 
 const mockStore = configureStore({});
+// const mockStore = configureStore([thunk]);
 
 const initialState = {
   cities: {
@@ -59,9 +61,11 @@ describe(`Test routing`, () => {
 
   it(`Render 'MainPage' when user navigate to '/' url`, () => {
     const history = createMemoryHistory();
+    const store = mockStore(initialState);
+    store.dispatch = () => Promise.resolve();
 
     render(
-        <redux.Provider store={mockStore(initialState)}>
+        <redux.Provider store={store}>
           <Router history={history}>
             <App />
           </Router>
