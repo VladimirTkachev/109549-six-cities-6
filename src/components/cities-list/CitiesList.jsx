@@ -48,5 +48,6 @@ CitiesList.propTypes = {
   onClick: PropTypes.func,
 };
 
-export const CitiesListWrapped = withCitiesList(CitiesList);
-export default CitiesList;
+// export const CitiesListWrapped = withCitiesList(CitiesList);
+// export default CitiesList;
+export default withCitiesList(CitiesList);

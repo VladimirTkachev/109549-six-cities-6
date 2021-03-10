@@ -7,7 +7,7 @@ import OfferCard from "Project/components/offer-card/OfferCard";
 import withOffersList from "./hoc/with-offers-list";
 
 const OffersList = (props) => {
-  const {auth, items, itemsIds, changeFavoriteStatus, onMouseEnter, onMouseLeave} = props;
+  const {auth, items = {}, itemsIds, changeFavoriteStatus, onMouseEnter, onMouseLeave} = props;
   const history = useHistory();
   const handleFavoriteChange = useCallback((id) => {
     if (auth) {
@@ -20,7 +20,7 @@ const OffersList = (props) => {
   return (
     <div className="cities__places-list places__list tabs__content">
       {itemsIds.map((id) => {
-        const card = items[id];
+        const card = items[id] || {};
 
         return (
           <OfferCard
@@ -54,5 +54,6 @@ OffersList.propTypes = {
   onMouseLeave: PropTypes.func.isRequired,
 };
 
-export const OffersListWrapped = withOffersList(OffersList);
-export default OffersList;
+// export const OffersListWrapped = withOffersList(OffersList);
+// export default OffersList;
+export default withOffersList(OffersList);

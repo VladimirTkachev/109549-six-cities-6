@@ -71,5 +71,6 @@ MapComponent.propTypes = {
   activeItem: OfferCardTypes,
 };
 
-export const MapComponentWrapped = withMapComponent(MapComponent);
-export default MapComponent;
+// export const MapComponentWrapped = withMapComponent(MapComponent);
+// export default MapComponent;
+export default withMapComponent(MapComponent);
