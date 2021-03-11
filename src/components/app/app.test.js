@@ -2,14 +2,12 @@ import React from "react";
 import * as redux from "react-redux";
 import {Router} from "react-router-dom";
 import {createMemoryHistory} from "history";
-import {render, screen} from "@testing-library/react";
+import {render, screen, waitFor} from "@testing-library/react";
 import configureStore from "redux-mock-store";
-import thunk from "redux-thunk";
 
 import App from "./App";
 
 const mockStore = configureStore({});
-// const mockStore = configureStore([thunk]);
 
 const initialState = {
   cities: {
@@ -29,16 +27,20 @@ const initialState = {
       label: `Popular`,
       value: `popular`,
     },
+    neightboursIdsMap: {},
     offersIdsMap: {
       Paris: [1],
     },
     offerCardsMap: {
       1: {
         id: 1,
+        title: `Canal View Prinsengracht`,
         location: {
           latitude: 1,
           longitude: 1,
         },
+        images: [``],
+        goods: [`Baby seat`],
         city: {
           location: {
             latitude: 1,
@@ -48,7 +50,13 @@ const initialState = {
       },
     },
   },
+  comments: {
+    commentsMap: {
+      1: [],
+    },
+  },
   auth: {
+    auth: false,
     user: {
       email: ``,
     },
@@ -59,7 +67,7 @@ describe(`Test routing`, () => {
   jest.spyOn(redux, `useSelector`);
   jest.spyOn(redux, `useDispatch`);
 
-  it(`Render 'MainPage' when user navigate to '/' url`, () => {
+  it(`Render 'MainPage' when user navigate to '/' url`, async () => {
     const history = createMemoryHistory();
     const store = mockStore(initialState);
     store.dispatch = () => Promise.resolve();
@@ -67,11 +75,65 @@ describe(`Test routing`, () => {
     render(
         <redux.Provider store={store}>
           <Router history={history}>
-            <App />
+            <App/>
           </Router>
         </redux.Provider>
     );
 
-    expect(screen.getByText(/1 places to stay/i)).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText(/1 places to stay/i)).toBeInTheDocument();
+    });
+  });
+
+  it(`Render 'LoginPage' when user navigate to '/login' url`, () => {
+    const history = createMemoryHistory();
+    const store = mockStore(initialState);
+
+    history.push(`/login`);
+    store.dispatch = () => Promise.resolve();
+
+    render(
+        <redux.Provider store={store}>
+          <Router history={history}>
+            <App/>
+          </Router>
+        </redux.Provider>
+    );
+
+    expect(screen.getByRole(`button`)).toHaveTextContent(/Sign in/i);
+  });
+
+  it(`Render 'OfferPage' when user navigate to '/offer:id' url`, async () => {
+    const history = createMemoryHistory();
+    const store = mockStore(initialState);
+
+    history.push(`/offer/1`);
+    store.dispatch = () => Promise.resolve();
+
+    render(
+        <redux.Provider store={store}>
+          <Router history={history}>
+            <App/>
+          </Router>
+        </redux.Provider>
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText(/Canal View Prinsengracht/i)).toBeInTheDocument();
+    });
+  });
+
+  it(`Render 'NotFoundPage' when user navigate to unknown url`, () => {
+    const history = createMemoryHistory();
+
+    history.push(`/unknown`);
+
+    render(
+        <Router history={history}>
+          <App/>
+        </Router>
+    );
+
+    expect(screen.getByText(/404 Not Found/i)).toBeInTheDocument();
   });
 });

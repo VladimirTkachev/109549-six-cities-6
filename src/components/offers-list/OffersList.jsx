@@ -54,6 +54,4 @@ OffersList.propTypes = {
   onMouseLeave: PropTypes.func.isRequired,
 };
 
-// export const OffersListWrapped = withOffersList(OffersList);
-// export default OffersList;
 export default withOffersList(OffersList);

@@ -140,6 +140,4 @@ MainPage.propTypes = {
   authStatus: PropTypes.bool.isRequired,
 };
 
-// export const MainPageWrapped = withMainPage(MainPage);
-// export default MainPage;
 export default withMainPage(MainPage);

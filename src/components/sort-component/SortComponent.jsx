@@ -59,6 +59,4 @@ SortComponent.propTypes = {
   onChange: PropTypes.func,
 };
 
-// export const SortComponentWrapped = withSortComponent(SortComponent);
-// export default SortComponent;
 export default withSortComponent(SortComponent);
