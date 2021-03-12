@@ -7,7 +7,17 @@
     "build": "webpack --mode production",
     "start": "webpack-dev-server",
     "eslint": "eslint --ext .jsx --ext .js src/",
-    "test": "npm run eslint"
+    "test": "npm run eslint && npm run test.jest",
+    "test.jest": "jest"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "\\.(css|less)$": "<rootDir>/src/style-mock.js",
+      "^Project(.*)$": "<rootDir>/src$1"
+    },
+    "setupFilesAfterEnv": [
+      "./setup-tests.js"
+    ]
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
@@ -28,8 +38,12 @@
     "node": ">=12.0.0"
   },
   "dependencies": {
+    "@testing-library/jest-dom": "^5.11.9",
+    "@testing-library/react": "^11.2.5",
     "axios": "^0.21.1",
+    "axios-mock-adapter": "^1.19.0",
     "history": "^4.10.1",
+    "jest": "^26.6.3",
     "leaflet": "^1.7.1",
     "prop-types": "15.7.2",
     "react": "16.14.0",
@@ -38,6 +52,7 @@
     "react-router-dom": "^5.2.0",
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
+    "redux-mock-store": "^1.5.4",
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
     "uuid": "^8.3.2"

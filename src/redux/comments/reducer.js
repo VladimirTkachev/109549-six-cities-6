@@ -1,6 +1,6 @@
 import {STORE_COMMENTS} from "./action-types";
 
-const initialState = {
+export const initialState = {
   /** Map - объект идентификаторов предложений на список комментариев */
   commentsMap: {},
 };

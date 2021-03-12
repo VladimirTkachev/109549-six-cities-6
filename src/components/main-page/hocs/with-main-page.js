@@ -11,7 +11,6 @@ import {
 function mapStateToProps(state) {
   return {
     offersIds: offerSelectors.getOffersIds(state),
-    selectedSort: offerSelectors.getSort(state),
     authStatus: authSelectors.getAuthStatus(state),
     email: authSelectors.getUserData(state, `email`),
   };

@@ -6,7 +6,7 @@ import {
   STORE_FAVORITE_DATA,
 } from "./action-types";
 
-const initialState = {
+export const initialState = {
   /** Данные выбранного варианта сортировки */
   sort: {
     label: `Popular`,

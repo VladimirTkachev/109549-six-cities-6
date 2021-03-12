@@ -3,7 +3,7 @@ import {
   REMOVE_NOTIFICATION,
 } from "./action-types";
 
-const initialState = {
+export const initialState = {
   /** Список уведомлений */
   items: [],
 };

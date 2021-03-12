@@ -2,16 +2,16 @@ import React, {useCallback, useState, useEffect} from "react";
 import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
 
-import {MapComponentWrapped} from "Project/components/map-component/MapComponent";
-import {OffersListWrapped} from "Project/components/offers-list/OffersList";
-import {CitiesListWrapped} from "Project/components/cities-list/CitiesList";
-import {SortComponentWrapped} from "Project/components/sort-component/SortComponent";
+import MapComponent from "Project/components/map-component/MapComponent";
+import OffersList from "Project/components/offers-list/OffersList";
+import CitiesList from "Project/components/cities-list/CitiesList";
+import SortComponent from "Project/components/sort-component/SortComponent";
 import Spinner from "Project/components/spinner/Spinner";
 
 import withMainPage from "./hocs/with-main-page.js";
 
 const MainPage = (props) => {
-  const {authStatus, email, selectedSort, offersIds, fetchOffersList} = props;
+  const {authStatus, email, offersIds, fetchOffersList} = props;
   const [activeItem, setActiveItem] = useState(null);
   const [fetching, setFetching] = useState(false);
   const handleMouseEnter = useCallback((item) => {
@@ -92,7 +92,7 @@ const MainPage = (props) => {
           </h1>
           <div className="tabs">
             <section className="locations container">
-              <CitiesListWrapped/>
+              <CitiesList/>
             </section>
           </div>
           <div className="cities">
@@ -104,31 +104,15 @@ const MainPage = (props) => {
                 <b className="places__found">
                   {`${numberOfPlaces} places to stay in Amsterdam`}
                 </b>
-                <form className="places__sorting"
-                  action="#"
-                  method="get">
-                  <span className="places__sorting-caption">
-                    Sort by
-                  </span>
-                  <span className="places__sorting-type"
-                    tabIndex="0">
-                    {selectedSort.label}
-                    <svg className="places__sorting-arrow"
-                      width="7"
-                      height="4">
-                      <use xlinkHref="#icon-arrow-select"/>
-                    </svg>
-                  </span>
-                  <SortComponentWrapped/>
-                </form>
-                <OffersListWrapped
+                <SortComponent/>
+                <OffersList
                   itemsIds={offersIds}
                   onMouseEnter={handleMouseEnter}
                   onMouseLeave={handleMouseLeave}/>
               </section>
               <div className="cities__right-section">
                 <section className="cities__map map">
-                  <MapComponentWrapped
+                  <MapComponent
                     itemsIds={offersIds}
                     activeItem={activeItem}/>
                 </section>
@@ -145,18 +129,9 @@ MainPage.defaultProps = {
   fetchOffersList: () => {},
 };
 
-const LabelValueType = PropTypes.shape({
-  /** Подпись */
-  label: PropTypes.string.isRequired,
-  /** Значение */
-  value: PropTypes.string.isRequired,
-});
-
 MainPage.propTypes = {
   /** email пользователя */
   email: PropTypes.string.isRequired,
-  /** Данные выбранной сортировки */
-  selectedSort: LabelValueType.isRequired,
   /** Список идентификаторов карточек предложений */
   offersIds: PropTypes.arrayOf(PropTypes.number),
   /** Получить список предложение */
@@ -165,5 +140,4 @@ MainPage.propTypes = {
   authStatus: PropTypes.bool.isRequired,
 };
 
-export const MainPageWrapped = withMainPage(MainPage);
-export default MainPage;
+export default withMainPage(MainPage);
