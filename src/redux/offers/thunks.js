@@ -31,7 +31,7 @@ function updateOfferCard(id) {
     const item = items[id];
 
     if (item) {
-      return Promise.resolve(updateOffer(item));
+      return Promise.resolve().then(() => dispatch(updateOffer(item)));
     }
 
     return api.get(`/hotels/${id}`).then(({data}) => {
