@@ -6,6 +6,10 @@ const RATING_LIST = Array.from({length: 5}).fill(1);
 const CommentForm = ({id: offerId, onSubmit}) => {
   const [selectedStart, setSelectedStar] = useState(null);
   const [commentText, setCommentText] = useState(``);
+  const [submitting, setSubmitting] = useState(false);
+  const disabled = ((commentText.length < 50) || (commentText.length > 300)) ||
+    (selectedStart === null);
+
   const handleSelectedStarsChange = useCallback((evt) => {
     setSelectedStar(evt.target.value);
   }, []);
@@ -15,11 +19,16 @@ const CommentForm = ({id: offerId, onSubmit}) => {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
+    setSubmitting(true);
 
     onSubmit(offerId, commentText, selectedStart)
       .then(() => {
         setSelectedStar(null);
         setCommentText(``);
+        setSubmitting(false);
+      })
+      .catch(() => {
+        setSubmitting(false);
       });
   };
 
@@ -45,6 +54,7 @@ const CommentForm = ({id: offerId, onSubmit}) => {
                 id={id}
                 type="radio"
                 checked={value === selectedStart}
+                disabled={submitting}
                 onChange={handleSelectedStarsChange}/>
               <label htmlFor={id}
                 className="reviews__rating-label form__rating-label"
@@ -64,6 +74,7 @@ const CommentForm = ({id: offerId, onSubmit}) => {
         name="review"
         value={commentText}
         placeholder="Tell how was your stay, what you like and what can be improved"
+        disabled={submitting}
         onChange={handleCommentTextChange}/>
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
@@ -72,7 +83,7 @@ const CommentForm = ({id: offerId, onSubmit}) => {
         </p>
         <button className="reviews__submit form__submit button"
           type="submit"
-          disabled={!selectedStart}>
+          disabled={disabled || submitting}>
             Submit
         </button>
       </div>

@@ -10,7 +10,7 @@ const FavoriteCard = ({item, onFavoriteChange}) => {
       <div className="favorites__image-wrapper place-card__image-wrapper">
         <Link to={`offer/${item.id}`}>
           <img className="place-card__image"
-            src={item.previewImage}
+            src={item.previewImg}
             width="150"
             height="110"
             alt="Place image"/>

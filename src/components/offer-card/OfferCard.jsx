@@ -8,7 +8,7 @@ const STAR_WIDTH = 20;
 
 const OfferCard = (props) => {
   const {item, onFavoriteChange, onMouseEnter, onMouseLeave} = props;
-  const {id, isPremium, previewImage, price, isFavorite, rating, title, type} = item;
+  const {id, isPremium, previewImg, price, isFavorite, rating, title, type} = item;
   const activeBookmarkClass = isFavorite ? `place-card__bookmark-button--active` : ``;
 
   return (
@@ -25,7 +25,7 @@ const OfferCard = (props) => {
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href="#">
           <img className="place-card__image"
-            src={previewImage}
+            src={previewImg}
             width="260"
             height="200"
             alt="Place image"/>

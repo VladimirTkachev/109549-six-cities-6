@@ -82,7 +82,7 @@ export function toReducerOffersCards(data = []) {
           isFavorite: it[`is_favorite`],
           isPremium: it[`is_premium`],
           maxAdults: it[`max_adults`],
-          previewImage: it[`preview_image`],
+          previewImg: it[`preview_image`],
         },
       },
     };

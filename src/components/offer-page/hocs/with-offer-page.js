@@ -14,7 +14,7 @@ import {
 
 function mapStateToProps(state) {
   return {
-    neightbours: offersSelectors.getNeightboursIdsMap(state),
+    nearbyOffersMap: offersSelectors.getNeightboursIdsMap(state),
     items: offersSelectors.getOfferCardsMap(state),
     email: authSelectors.getUserData(state, `email`),
     authStatus: authSelectors.getAuthStatus(state),
@@ -25,6 +25,8 @@ function mapStateToProps(state) {
 const mapDispatchToProps = {
   updateOfferCard: offersThunks.updateOfferCard,
   fetchCommentsList: commentThunks.fetchCommentsList,
+  changeFavoriteStatus: offersThunks.changeFavoriteStatus,
+  fetchNearbyOffers: offersThunks.fetchNearbyOffers,
   onSubmit: commentThunks.appendUserComment,
 };
 
