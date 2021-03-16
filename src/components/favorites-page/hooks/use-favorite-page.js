@@ -3,7 +3,6 @@ import {useCallback, useEffect} from "react";
 
 import {
   useSelector,
-  // TODO: Нужна для тестов, удалить когда будет сдача проекта
   useDispatch,
 } from "react-redux";
 
