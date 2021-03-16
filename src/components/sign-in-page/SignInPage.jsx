@@ -1,6 +1,6 @@
 import React, {useRef, useEffect} from "react";
 import PropTypes from "prop-types";
-import {Link, Redirect, useHistory} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 
 import withSignInPage from "./hocs/with-sign-in-page";
 
@@ -10,7 +10,6 @@ const SignInPage = ({auth, onLogin}) => {
   const history = useHistory();
 
   useEffect(() => {
-    console.log("auth:", auth)
     if (auth) {
       history.push(`/`);
     }

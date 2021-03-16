@@ -34,6 +34,7 @@ const initialState = {
     offerCardsMap: {
       1: {
         id: 1,
+        bedrooms: 1,
         title: `Canal View Prinsengracht`,
         location: {
           latitude: 1,
@@ -42,6 +43,7 @@ const initialState = {
         images: [``],
         goods: [`Baby seat`],
         city: {
+          name: ``,
           location: {
             latitude: 1,
             longitude: 1,
@@ -60,6 +62,9 @@ const initialState = {
     user: {
       email: ``,
     },
+  },
+  notifications: {
+    items: [],
   },
 };
 
@@ -125,13 +130,16 @@ describe(`Test routing`, () => {
 
   it(`Render 'NotFoundPage' when user navigate to unknown url`, () => {
     const history = createMemoryHistory();
+    const store = mockStore(initialState);
 
     history.push(`/unknown`);
 
     render(
-        <Router history={history}>
-          <App/>
-        </Router>
+        <redux.Provider store={store}>
+          <Router history={history}>
+            <App/>
+          </Router>
+        </redux.Provider>
     );
 
     expect(screen.getByText(/404 Not Found/i)).toBeInTheDocument();
