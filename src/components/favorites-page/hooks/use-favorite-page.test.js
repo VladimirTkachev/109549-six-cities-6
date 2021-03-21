@@ -1,5 +1,3 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable react/display-name */
 import React from "react";
 import {renderHook} from "@testing-library/react-hooks";
 import * as redux from "react-redux";
@@ -8,6 +6,8 @@ import configureStore from "redux-mock-store";
 import useFavoritePage from "./use-favorite-page";
 
 const mockStore = configureStore({});
+
+redux.useDispatch = jest.fn().mockImplementation(() => () => jest.fn());
 
 const initialState = {
   cities: {
@@ -85,19 +85,20 @@ const initialState = {
 describe(`useFavoritePage tests`, () => {
   it(`should return object with key length equal 5`, () => {
     const store = mockStore(initialState);
-    store.dispatch = () => Promise.resolve();
+    const wrapper = ({children}) => (
+      <redux.Provider store={store}>
+        {children}
+      </redux.Provider>
+    );
     const {result} = renderHook(() => {
       return useFavoritePage();
     }, {
-      wrapper: ({children}) => (
-        <redux.Provider store={store}>
-          {children}
-        </redux.Provider>
-      ),
+      wrapper,
     });
     const {current} = result;
     const params = current;
 
+    expect(redux.useDispatch).toBeCalledTimes(1);
     expect(Object.keys(params)).toHaveLength(5);
   });
 });

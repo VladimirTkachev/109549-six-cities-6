@@ -72,9 +72,10 @@ describe(`Auth thunks should work correctly`, () => {
 
     return checkAuthLoader(dispatch, () => {}, api)
       .then(() => {
-        expect(dispatch).toHaveBeenCalledTimes(1);
+        expect(dispatch).toHaveBeenCalledTimes(2);
 
         expect(dispatch).toHaveBeenNthCalledWith(1, changeAuthStatus(true));
+        expect(dispatch).toHaveBeenNthCalledWith(2, storeUserData({}));
       })
       .catch(() => {
         expect(dispatch).toHaveBeenCalledTimes(1);
