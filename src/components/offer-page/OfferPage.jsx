@@ -12,6 +12,7 @@ import NeighboursList from "./neighbours-list/offers-page-neighbours-list";
 import CommentForm from "./comments-form/offer-page-comments-form";
 import withOfferPage from "./hocs/with-offer-page.js";
 import useOfferPage from "./hooks/use-offer-page";
+import Empty from "./empty/offer-page-empty";
 
 export const STAR_WIDTH = 20;
 
@@ -32,7 +33,14 @@ const OfferPage = (props) => {
     );
   }
 
-  const item = items[id] || {};
+  const item = items[id];
+
+  if (!item) {
+    return (
+      <Empty id={id} authStatus={authStatus} email={email}/>
+    );
+  }
+
   const comments = commentsMap[id] || [];
   const {images, isPremium, isFavorite, title, description, rating, type, bedrooms, maxAdults, price, goods, host = {}} = item;
   const bookMarkActiveClass = isFavorite
