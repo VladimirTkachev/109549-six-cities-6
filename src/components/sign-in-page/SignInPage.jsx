@@ -1,12 +1,19 @@
-import React, {useRef} from "react";
+import React, {useRef, useEffect} from "react";
 import PropTypes from "prop-types";
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 
 import withSignInPage from "./hocs/with-sign-in-page";
 
-const SignInPage = ({onLogin}) => {
+const SignInPage = ({auth, onLogin}) => {
   const loginRef = useRef(null);
   const passwordRef = useRef(null);
+  const history = useHistory();
+
+  useEffect(() => {
+    if (auth) {
+      history.push(`/`);
+    }
+  }, [auth]);
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
@@ -130,6 +137,8 @@ SignInPage.defaultProps = {
 };
 
 SignInPage.propTypes = {
+  /** Статус авторизации пользователя */
+  auth: PropTypes.bool.isRequired,
   /** Отправить данные пользователя на сервер */
   onLogin: PropTypes.func.isRequired,
 };

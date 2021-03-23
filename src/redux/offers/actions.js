@@ -4,6 +4,7 @@ import {
   STORE_OFFERS,
   UPDATE_OFFER,
   STORE_FAVORITE_DATA,
+  STORE_NEARBY_OFFERS,
 } from "./action-types";
 
 const changeSort = (sort) => {
@@ -54,10 +55,22 @@ const storeFavoriteData = ({cities, favoritesOffersIdsMap, offerCardsMap}) => {
   };
 };
 
+const storeNearbyOffers = ({offersIdsMap, offerCardsMap}, id) => {
+  return {
+    type: STORE_NEARBY_OFFERS,
+    payload: {
+      offersIdsMap,
+      offerCardsMap,
+    },
+    meta: id,
+  };
+};
+
 export {
   changeSort,
   storeHotelData,
   storeOffers,
   updateOffer,
   storeFavoriteData,
+  storeNearbyOffers,
 };

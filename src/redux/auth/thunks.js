@@ -40,7 +40,14 @@ function logout() {
 function checkAuth() {
   return (dispatch, _getState, api) => {
     return api.get(`/login`)
-      .then(() => dispatch(changeAuthStatus(true)))
+      .then(({data}) => {
+        dispatch(changeAuthStatus(true));
+        dispatch(storeUserData({
+          ...data,
+          avatarUrl: data[`avatar_url`],
+          isPro: data[`is_pro`],
+        }));
+      })
       .catch((error) => {
         dispatch(actions.appendNotification({
           message: error.message,

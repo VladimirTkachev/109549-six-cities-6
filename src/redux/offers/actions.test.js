@@ -4,6 +4,7 @@ import {
   storeOffers,
   updateOffer,
   storeFavoriteData,
+  storeNearbyOffers,
 } from "./actions";
 import {
   CHANGE_SORT,
@@ -11,6 +12,7 @@ import {
   STORE_OFFERS,
   UPDATE_OFFER,
   STORE_FAVORITE_DATA,
+  STORE_NEARBY_OFFERS,
 } from "./action-types";
 
 describe(`Offers action creators work correctly`, () => {
@@ -97,5 +99,19 @@ describe(`Offers action creators work correctly`, () => {
     };
 
     expect(storeFavoriteData(data)).toEqual(expectedAction);
+  });
+
+  it(`Action creator for store nearby data returns correct action`, () => {
+    const data = {
+      offersIdsMap,
+      offerCardsMap,
+    };
+    const expectedAction = {
+      type: STORE_NEARBY_OFFERS,
+      payload: data,
+      meta: 1,
+    };
+
+    expect(storeNearbyOffers(data, 1)).toEqual(expectedAction);
   });
 });

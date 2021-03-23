@@ -3,7 +3,9 @@ import PropTypes from "prop-types";
 
 import OfferCard from "Project/components/offer-card/OfferCard";
 
-const NeighboursList = ({items, itemsIds}) => {
+const NeighboursList = (props) => {
+  const {items, itemsIds, changeFavoriteStatus} = props;
+
   return (
     <div className="near-places__list places__list">
       {itemsIds.map((id, index) => {
@@ -12,11 +14,16 @@ const NeighboursList = ({items, itemsIds}) => {
         return (
           <OfferCard
             key={`${id}#${index}`}
-            item={card}/>
+            item={card}
+            onFavoriteChange={changeFavoriteStatus}/>
         );
       })}
     </div>
   );
+};
+
+NeighboursList.defaultProps = {
+  changeFavoriteStatus: () => {},
 };
 
 NeighboursList.propTypes = {
@@ -24,6 +31,8 @@ NeighboursList.propTypes = {
   itemsIds: PropTypes.arrayOf(PropTypes.number),
   /** Map - объект идентифыикаторо карточки на данные карточки предложения */
   items: PropTypes.object,
+  /** Обработчик измменения состояния "Избранное" */
+  changeFavoriteStatus: PropTypes.func.isRequired,
 };
 
 export default NeighboursList;

@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import {Link, useParams} from "react-router-dom";
+import {Link} from "react-router-dom";
 
-import {MapComponentWrapped} from "Project/components/map-component/MapComponent";
+import MapComponent from "Project/components/map-component/MapComponent";
 import Spinner from "Project/components/spinner/Spinner";
 
 import ImagesList from "./images-list/offer-page-images-list";
@@ -11,6 +11,8 @@ import ReviewersList from "./reviewers-list/offer-page-reviewers-list";
 import NeighboursList from "./neighbours-list/offers-page-neighbours-list";
 import CommentForm from "./comments-form/offer-page-comments-form";
 import withOfferPage from "./hocs/with-offer-page.js";
+import useOfferPage from "./hooks/use-offer-page";
+import Empty from "./empty/offer-page-empty";
 
 export const STAR_WIDTH = 20;
 
@@ -22,19 +24,8 @@ const OfferTypes = {
 };
 
 const OfferPage = (props) => {
-  const {items, email, authStatus, commentsMap, neightbours, updateOfferCard, fetchCommentsList, onSubmit} = props;
-  const id = Number(useParams().id);
-  const [fetching, setFetching] = useState(true);
-
-  useEffect(() => {
-    updateOfferCard(id).then(() => {
-      setFetching(false);
-    });
-  }, [id, updateOfferCard]);
-
-  useEffect(() => {
-    fetchCommentsList(id);
-  }, [id, fetchCommentsList]);
+  const {items, email, authStatus, commentsMap, nearbyOffersMap, onSubmit} = props;
+  const {id, fetching, onFavoriteChange} = useOfferPage(props);
 
   if (fetching) {
     return (
@@ -42,13 +33,20 @@ const OfferPage = (props) => {
     );
   }
 
-  const item = items[id] || {};
+  const item = items[id];
+
+  if (!item) {
+    return (
+      <Empty id={id} authStatus={authStatus} email={email}/>
+    );
+  }
+
   const comments = commentsMap[id] || [];
   const {images, isPremium, isFavorite, title, description, rating, type, bedrooms, maxAdults, price, goods, host = {}} = item;
   const bookMarkActiveClass = isFavorite
     ? `property__bookmark-button--active` : ``;
   const hostProClass = host.isPro ? `property__avatar-wrapper--pro` : ``;
-  const hasNeighboursList = neightbours[id] && !!neightbours[id].length;
+  const hasNeighboursList = nearbyOffersMap[id] && !!nearbyOffersMap[id].length;
 
   return (
     <>
@@ -77,9 +75,10 @@ const OfferPage = (props) => {
           <div className="container">
             <div className="header__wrapper">
               <div className="header__left">
-                <a className="header__logo-link" href="main.html">
+                <Link className="header__logo-link"
+                  to="/">
                   <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"/>
-                </a>
+                </Link>
               </div>
               <nav className="header__nav">
                 <ul className="header__nav-list">
@@ -115,7 +114,8 @@ const OfferPage = (props) => {
                     {title}
                   </h1>
                   <button className={`property__bookmark-button button ${bookMarkActiveClass}`}
-                    type="button">
+                    type="button"
+                    onClick={(_evt) => onFavoriteChange(id)}>
                     <svg className="property__bookmark-icon"
                       width="31"
                       height="33">
@@ -197,7 +197,9 @@ const OfferPage = (props) => {
             </div>
             <section className="property__map map">
               {hasNeighboursList && (
-                <MapComponentWrapped itemsIds={neightbours[id]}/>
+                <MapComponent
+                  itemsIds={[...nearbyOffersMap[id], id]}
+                  activeItem={item}/>
               )}
             </section>
           </section>
@@ -210,7 +212,8 @@ const OfferPage = (props) => {
                   </h2>
                   <NeighboursList
                     items={items}
-                    itemsIds={neightbours[id]}/>
+                    itemsIds={nearbyOffersMap[id]}
+                    changeFavoriteStatus={onFavoriteChange}/>
                 </>
               )}
               {authStatus && (
@@ -227,6 +230,8 @@ const OfferPage = (props) => {
 OfferPage.defaultProps = {
   updateOfferCard: () => {},
   fetchCommentsList: () => {},
+  fetchNearbyOffers: () => {},
+  changeFavoriteStatus: () => {},
   onSubmit: () => {},
 };
 
@@ -238,13 +243,17 @@ OfferPage.propTypes = {
   /** Map - объект идентификаторов предложений на список комментариев */
   commentsMap: PropTypes.object,
   /** Map - объект идентифыикаторо карточки на данные карточки предложения */
-  neightbours: PropTypes.object,
+  nearbyOffersMap: PropTypes.object,
   /** Статус авторизации пользователя */
   authStatus: PropTypes.bool.isRequired,
   /** Обновить данные карточки предложения */
   updateOfferCard: PropTypes.func.isRequired,
   /** Получить список комментариев */
   fetchCommentsList: PropTypes.func.isRequired,
+  /** Получить список соседних предложений */
+  fetchNearbyOffers: PropTypes.func.isRequired,
+  /** Обработчик измменения состояния "Избранное" */
+  changeFavoriteStatus: PropTypes.func.isRequired,
   /** Отправить данные формы комментариев на сервер */
   onSubmit: PropTypes.func.isRequired,
 };

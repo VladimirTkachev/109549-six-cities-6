@@ -4,6 +4,7 @@ import {
   CHANGE_SORT,
   UPDATE_OFFER,
   STORE_FAVORITE_DATA,
+  STORE_NEARBY_OFFERS,
 } from "./action-types";
 
 export const initialState = {
@@ -24,6 +25,18 @@ export const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case STORE_NEARBY_OFFERS:
+      return {
+        ...state,
+        neightboursIdsMap: {
+          ...state.neightboursIdsMap,
+          [action.meta]: action.payload.offersIdsMap,
+        },
+        offerCardsMap: {
+          ...state.offerCardsMap,
+          ...action.payload.offerCardsMap,
+        },
+      };
     case STORE_FAVORITE_DATA:
       return {
         ...state,

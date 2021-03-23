@@ -1,9 +1,18 @@
 import {connect} from "react-redux";
 
-import {thunks} from "Project/redux/auth";
+import {
+  selectors,
+  thunks,
+} from "Project/redux/auth";
+
+function mapStateToProps(state) {
+  return {
+    auth: selectors.getAuthStatus(state),
+  };
+}
 
 const mapDispatchToProps = {
   onLogin: thunks.login,
 };
 
-export default connect(null, mapDispatchToProps);
+export default connect(mapStateToProps, mapDispatchToProps);

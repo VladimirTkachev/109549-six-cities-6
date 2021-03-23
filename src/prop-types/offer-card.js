@@ -50,7 +50,7 @@ export const OfferCardTypes = PropTypes.shape({
   /** Максималльно число взрослых */
   maxAdults: PropTypes.number.isRequired,
   /** Путь картинки на превью */
-  previewImage: PropTypes.string.isRequired,
+  previewImg: PropTypes.string.isRequired,
   /** Цена */
   price: PropTypes.number.isRequired,
   /** Рейтинг */

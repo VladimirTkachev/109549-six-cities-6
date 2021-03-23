@@ -5,10 +5,17 @@ import {ReviewersType} from "Project/prop-types/offer-card";
 
 import {STAR_WIDTH} from "../OfferPage";
 
-const ReviewersList = ({items}) => {
+const ReviewersList = ({items = []}) => {
+  const sorterItems = items.sort((a, b) => {
+    const dateA = a.date;
+    const dateB = b.date;
+
+    return new Date(dateB) - new Date(dateA);
+  });
+
   return (
     <ul className="reviews__list">
-      {items.map((it, index) => {
+      {sorterItems.map((it, index) => {
         return (
           <li key={`${it.id}#${index}`}
             className="reviews__item">
