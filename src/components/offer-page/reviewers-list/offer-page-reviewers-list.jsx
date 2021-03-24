@@ -3,19 +3,14 @@ import PropTypes from "prop-types";
 
 import {ReviewersType} from "Project/prop-types/offer-card";
 
+import {sorterItems} from "../utils/sort";
+
 import {STAR_WIDTH} from "../OfferPage";
 
 const ReviewersList = ({items = []}) => {
-  const sorterItems = items.sort((a, b) => {
-    const dateA = a.date;
-    const dateB = b.date;
-
-    return new Date(dateB) - new Date(dateA);
-  });
-
   return (
     <ul className="reviews__list">
-      {sorterItems.map((it, index) => {
+      {sorterItems(items).map((it, index) => {
         return (
           <li key={`${it.id}#${index}`}
             className="reviews__item">

@@ -1,11 +1,13 @@
 import React, {useEffect} from "react";
 import PropTypes from "prop-types";
 
+const TIMEOUT = 1500;
+
 const Item = ({item = {}, onRemove}) => {
   useEffect(() => {
     const timerId = setTimeout(() => {
       onRemove(item.id);
-    }, 1500);
+    }, TIMEOUT);
 
     return () => clearInterval(timerId);
   }, [item, onRemove]);
@@ -18,10 +20,6 @@ const Item = ({item = {}, onRemove}) => {
       </span>
     </div>
   );
-};
-
-Item.defaultProps = {
-  onRemove: () => {},
 };
 
 Item.propTypes = {
